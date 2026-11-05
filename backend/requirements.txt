@@ -6,3 +6,4 @@ requests>=2.31
 
 gunicorn>=23.0
 whitenoise>=6.8
+django-cors-headers
