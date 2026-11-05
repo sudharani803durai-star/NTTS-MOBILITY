@@ -30,6 +30,13 @@ TEMPLATES = [{
 }]
 WSGI_APPLICATION = "config.wsgi.application"
 
+
+DB_SSL_CA = os.getenv("DB_SSL_CA", "certificates/ca.pem")
+DB_SSL_CA_PATH = Path(DB_SSL_CA)
+
+if not DB_SSL_CA_PATH.is_absolute():
+    DB_SSL_CA_PATH = BASE_DIR / DB_SSL_CA
+
 if os.getenv("DB_ENGINE", "sqlite").lower() == "mysql":
     DATABASES = {
         "default": {
@@ -41,7 +48,9 @@ if os.getenv("DB_ENGINE", "sqlite").lower() == "mysql":
             "PORT": os.getenv("DB_PORT", "3306"),
             "OPTIONS": {
                 "charset": "utf8mb4",
-                "ssl": {"ca": os.getenv("DB_SSL_CA", "")},
+                "ssl": {
+                    "ca": str(DB_SSL_CA_PATH),
+                },
             },
         }
     }
@@ -52,6 +61,7 @@ else:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
