@@ -417,3 +417,53 @@ button:hover {
     background: #086b3e !important;
     color: #ffffff !important;
 }
+/* FINAL SIDEBAR VISIBILITY FIX */
+
+.shell > .side,
+.side {
+    background: #14251c !important;
+    background-color: #14251c !important;
+    color: #ffffff !important;
+}
+
+.side .brand b,
+.side .brand small,
+.side .nav-label {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+.side .nav a,
+.side .side-bottom a {
+    color: #eaf5ee !important;
+    background: transparent !important;
+    opacity: 1 !important;
+}
+
+.side .nav a.active {
+    background: #10844f !important;
+    color: #ffffff !important;
+}
+
+.side .nav a:hover:not(.active) {
+    background: #24543a !important;
+    color: #ffffff !important;
+}
+
+.side .nav .ico,
+.side .nav a span {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+.side .nav-label {
+    color: #a9c4b2 !important;
+}
+
+.side .brand {
+    border-bottom-color: #ffffff30 !important;
+}
+
+.side .side-bottom {
+    border-top-color: #ffffff30 !important;
+}
