@@ -1,16 +1,18 @@
-import os
+﻿import os
 import json
 from urllib.parse import quote
 from django.conf import settings
 from django import forms
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.dateparse import parse_date, parse_time
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.views.decorators.http import require_http_methods
@@ -419,3 +421,60 @@ def cms_theme(request):
     if request.method == 'POST' and form.is_valid():
         form.save(); messages.success(request, 'Global website design updated.'); return redirect('cms_theme')
     return render(request, 'cms_form.html', {'form': form, 'title': 'Global Website Design', 'model_key': 'theme', 'is_edit': True})
+
+@login_required(login_url='/cms/login/')
+@user_passes_test(staff_check, login_url='/cms/login/')
+def cms_profile(request):
+    user = request.user
+
+    if request.method == 'POST':
+        action = request.POST.get('action', '')
+
+        if not user.check_password(request.POST.get('current_password', '')):
+            messages.error(request, 'Current password is incorrect.')
+
+        elif action == 'profile':
+            first_name = request.POST.get('first_name', '').strip()
+            last_name = request.POST.get('last_name', '').strip()
+            email = request.POST.get('email', '').strip()
+            username = request.POST.get('username', '').strip()
+
+            if not all([first_name, email, username]):
+                messages.error(request, 'Name, email and username are required.')
+            elif User.objects.filter(username__iexact=username).exclude(pk=user.pk).exists():
+                messages.error(request, 'This username is already taken.')
+            elif User.objects.filter(email__iexact=email).exclude(pk=user.pk).exists():
+                messages.error(request, 'This email is already in use.')
+            else:
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.username = username
+                user.save()
+                messages.success(request, 'Admin profile updated successfully.')
+                return redirect('cms_profile')
+
+        elif action == 'password':
+            new_password = request.POST.get('new_password', '')
+            confirm_password = request.POST.get('confirm_password', '')
+
+            if not new_password:
+                messages.error(request, 'Enter a new password.')
+            elif new_password != confirm_password:
+                messages.error(request, 'New password and confirmation do not match.')
+            else:
+                try:
+                    validate_password(new_password, user=user)
+                    user.set_password(new_password)
+                    user.save()
+                    update_session_auth_hash(request, user)
+                    messages.success(request, 'Password changed successfully.')
+                    return redirect('cms_profile')
+                except ValidationError as error:
+                    for item in error.messages:
+                        messages.error(request, item)
+
+        else:
+            messages.error(request, 'Invalid settings request.')
+
+    return render(request, 'cms_profile.html', {'profile_user': user})

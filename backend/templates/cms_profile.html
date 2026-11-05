@@ -1,0 +1,82 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Profile | NTTS Mobility</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/cms-premium.css' %}">
+<style>
+body{margin:0;background:#f5f8f6;font-family:Poppins,sans-serif;color:#18221c}
+.page{max-width:850px;margin:35px auto;padding:20px}
+.card{background:#fff;border:1px solid #e3ebe5;border-radius:18px;padding:26px;margin-bottom:22px;box-shadow:0 8px 25px #183d2509}
+h1,h2{color:#18221c}
+h1{font-size:27px}h2{font-size:18px}
+label{display:block;margin:13px 0 6px;font-size:13px;font-weight:600}
+input{width:100%;box-sizing:border-box;padding:12px;border:1px solid #dce7df;border-radius:9px;font:inherit;color:#18221c}
+button,.back{display:inline-block;margin-top:18px;padding:12px 20px;border:0;border-radius:9px;background:#10844f;color:#fff;text-decoration:none;font-weight:600;cursor:pointer}
+.back{background:#20372b;margin-left:8px}
+.msg{padding:12px;border-radius:9px;background:#eaf7ef;color:#087345;margin:10px 0}
+.error{background:#fff0f0;color:#a32a2a}
+small{color:#64746a}
+</style>
+</head>
+<body>
+<main class="page">
+<h1>Profile & Security</h1>
+<p>Manage your NTTS Mobility administrator account.</p>
+
+{% for message in messages %}
+<div class="msg {% if message.tags == 'error' %}error{% endif %}">{{ message }}</div>
+{% endfor %}
+
+<section class="card">
+<h2>Admin Profile</h2>
+<form method="post">
+{% csrf_token %}
+<input type="hidden" name="action" value="profile">
+
+<label>First Name</label>
+<input name="first_name" value="{{ profile_user.first_name }}" required>
+
+<label>Last Name</label>
+<input name="last_name" value="{{ profile_user.last_name }}">
+
+<label>Email Address</label>
+<input type="email" name="email" value="{{ profile_user.email }}" required>
+
+<label>Username</label>
+<input name="username" value="{{ profile_user.username }}" required>
+
+<label>Current Password (required to save profile)</label>
+<input type="password" name="current_password" required autocomplete="current-password">
+
+<button type="submit">Save Profile</button>
+</form>
+</section>
+
+<section class="card">
+<h2>Change Password</h2>
+<form method="post">
+{% csrf_token %}
+<input type="hidden" name="action" value="password">
+
+<label>Current Password</label>
+<input type="password" name="current_password" required autocomplete="current-password">
+
+<label>New Password</label>
+<input type="password" name="new_password" required autocomplete="new-password">
+
+<label>Confirm New Password</label>
+<input type="password" name="confirm_password" required autocomplete="new-password">
+
+<small>Use a strong password that is not easy to guess.</small><br>
+<button type="submit">Update Password</button>
+</form>
+</section>
+
+<a class="back" href="{% url 'cms_dashboard' %}">Back to Dashboard</a>
+</main>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from django.urls import path
+﻿from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from mobility import views
@@ -10,6 +10,7 @@ urlpatterns = [
     path('my-rides/', views.my_rides, name='my_rides'),
     path('my-rides/<int:pk>/track/', views.track_customer_ride, name='track_customer_ride'),
     path('cms/login/', views.cms_login, name='cms_login'),
+    path('cms/profile/', views.cms_profile, name='cms_profile'),
     path('cms/builder/', views.cms_builder, name='cms_builder'),
     path('cms/builder/add/', views.cms_builder_section, name='cms_builder_add'),
     path('cms/builder/<int:pk>/edit/', views.cms_builder_section, name='cms_builder_edit'),
@@ -29,3 +30,4 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
