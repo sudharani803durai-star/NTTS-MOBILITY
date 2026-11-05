@@ -237,17 +237,40 @@ def customer_login(request):
                     "This code expires in 5 minutes. Do not share it with anyone."
                 )
                 try:
-                    sent = send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
-                    if sent != 1:
-                        raise RuntimeError("Email provider did not accept the message.")
+                    response = requests.post(
+                        "https://api.brevo.com/v3/smtp/email",
+                        headers={
+                            "accept": "application/json",
+                            "api-key": settings.BREVO_API_KEY,
+                            "content-type": "application/json",
+                        },
+                        json={
+                            "sender": {
+                                "email": settings.DEFAULT_FROM_EMAIL,
+                                "name": "NTTS Mobility",
+                            },
+                            "to": [{"email": email}],
+                            "subject": subject,
+                            "textContent": body,
+                        },
+                        timeout=15,
+                    )
+
+                    if response.status_code not in (200, 201, 202):
+                        raise RuntimeError(
+                            f"Brevo API error: {response.status_code} - {response.text[:300]}"
+                        )
+
                     cache.set(_customer_otp_cache_key(email), {"otp": otp, "phone": phone}, timeout=300)
                     cache.set(_customer_otp_cooldown_key(email), True, timeout=60)
                     request.session["customer_otp_email"] = email
                     request.session["customer_otp_phone"] = phone
                     messages.success(request, "OTP sent to your email address. Please check your inbox and spam folder.")
                     return render(request, "customer_login.html", {"otp_sent": True, "email": email, "phone": phone})
-                except Exception:
-                    error = "Unable to send OTP. Check your Brevo SMTP settings and verified sender email."
+
+                except Exception as exc:
+                    print(f"Brevo OTP email error: {exc}")
+                    error = "Unable to send OTP. Please check your verified sender email and Brevo API configuration."
         elif action == "verify_otp":
             entered_otp = request.POST.get("otp", "").strip()
             saved = cache.get(_customer_otp_cache_key(email))
