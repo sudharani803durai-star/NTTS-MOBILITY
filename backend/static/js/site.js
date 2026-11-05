@@ -74,3 +74,49 @@ if(form){form.addEventListener('submit',async e=>{e.preventDefault();const messa
 
 // Figma-style booking confirmation overlay.
 (() => {const modal=document.getElementById('bookingSuccess');if(!modal)return;const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-lock')};modal.querySelectorAll('[data-close-success]').forEach(el=>el.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close()});})();
+
+// Active navigation: highlight the section currently visible on screen.
+(() => {
+  const nav = document.getElementById("navLinks");
+  if (!nav) return;
+
+  const links = [...nav.querySelectorAll('a[href^="#"]')];
+  const sections = links
+    .map(link => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  const setActive = (id) => {
+    links.forEach(link => {
+      const active = link.getAttribute("href") === `#${id}`;
+      link.classList.toggle("active", active);
+
+      if (active) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+    if (visible.length) setActive(visible[0].target.id);
+  }, {
+    rootMargin: "-20% 0px -65% 0px",
+    threshold: [0, 0.1, 0.25, 0.5]
+  });
+
+  sections.forEach(section => observer.observe(section));
+
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      const id = link.getAttribute("href").slice(1);
+      setActive(id);
+    });
+  });
+
+  setActive("home");
+})();
