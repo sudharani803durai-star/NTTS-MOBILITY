@@ -323,3 +323,97 @@ a[href*="builder"]:hover {
         min-width: 620px;
     }
 }
+/* NTTS FINAL PREMIUM VISIBILITY FIX */
+
+/* Dashboard cards - remove unwanted green highlights */
+.tiles .tile {
+    background: #ffffff !important;
+    color: #18221c !important;
+    border: 1px solid #dce8df !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04) !important;
+}
+
+.tiles .tile b {
+    color: #18221c !important;
+}
+
+.tiles .tile small {
+    color: #52645a !important;
+}
+
+/* Card icons */
+.tiles .tile .icon {
+    background: #e6f4eb !important;
+    color: #087345 !important;
+}
+
+/* Subtle card hover */
+.tiles .tile:hover {
+    background: #f8fcf9 !important;
+    border-color: #9cc9ad !important;
+    transform: translateY(-2px);
+}
+
+/* Sidebar - only active menu highlighted */
+.side .nav a:not(.active) {
+    background: transparent !important;
+    color: #eaf5ee !important;
+}
+
+.side .nav a:not(.active):hover {
+    background: #24543a !important;
+    color: #ffffff !important;
+}
+
+.side .nav a.active {
+    background: #10844f !important;
+    color: #ffffff !important;
+}
+
+/* All sidebar icons visible */
+.side .nav .ico {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* Main headings and text */
+.welcome h1,
+.section-head h2,
+.panel h2 {
+    color: #18221c !important;
+}
+
+.welcome p,
+.section-head p {
+    color: #52645a !important;
+}
+
+/* Dashboard statistics */
+.stat {
+    background: #ffffff !important;
+}
+
+.stat .label {
+    color: #52645a !important;
+}
+
+.stat b {
+    color: #18221c !important;
+}
+
+.stat small {
+    color: #087345 !important;
+}
+
+/* Buttons */
+.btn,
+button {
+    background: #10844f !important;
+    color: #ffffff !important;
+}
+
+.btn:hover,
+button:hover {
+    background: #086b3e !important;
+    color: #ffffff !important;
+}
