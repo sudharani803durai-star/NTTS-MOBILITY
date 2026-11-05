@@ -1,76 +1,325 @@
+@'
+/* =====================================================
+   NTTS MOBILITY - PREMIUM CMS DESIGN SYSTEM
+   High Contrast | Responsive | Clean Owner Studio
+===================================================== */
 
-/* NTTS Mobility CMS shared design system */
-:root{--ntts-green:#10844f;--ntts-ink:#181c24;--ntts-bg:#f5f8f6;--ntts-line:#e3ebe5;--ntts-muted:#718078}
-body{font-family:Poppins,system-ui,sans-serif!important;color:var(--ntts-ink)}
-button,.btn,.actions a,.actions button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
-button:hover,.btn:hover,.actions a:hover,.actions button:hover{transform:translateY(-1px);box-shadow:0 8px 20px #10844f20}
-input:not([type=checkbox]),select,textarea{max-width:100%;border:1px solid var(--ntts-line)!important;border-radius:11px!important;padding:12px 13px!important;font:inherit!important;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--ntts-green)!important;box-shadow:0 0 0 3px #10844f18}
-table{min-width:650px}
-th{font-weight:700!important;letter-spacing:.03em}
-td,th{padding:14px 13px!important}
-.panel,.panel-card,.card{box-shadow:0 12px 35px #1b38240a}
-@media(max-width:720px){.wrap{margin-top:22px!important;padding-left:14px!important;padding-right:14px!important}.panel{padding:16px!important}.head h1,h1{font-size:25px!important}}
-/* Website Builder text visibility */
+:root {
+    --ntts-green: #10844f;
+    --ntts-green-dark: #086b3e;
+    --ntts-green-light: #e6f4eb;
+    --ntts-ink: #18221c;
+    --ntts-muted: #52645a;
+    --ntts-bg: #f5f8f6;
+    --ntts-card: #ffffff;
+    --ntts-line: #e3ebe5;
+    --ntts-sidebar: #14251c;
+    --ntts-sidebar-text: #eaf5ee;
+}
+
+/* ================= GENERAL ================= */
+
+* {
+    box-sizing: border-box;
+}
 
 body {
-    color: #181C24 !important;
+    font-family: Poppins, system-ui, sans-serif !important;
+    background: var(--ntts-bg) !important;
+    color: var(--ntts-ink) !important;
+    line-height: 1.6;
 }
 
-/* Headings and paragraphs */
-h1, h2, h3, p, label, span {
-    color: #181C24;
+/* ================= HEADINGS ================= */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--ntts-ink) !important;
+    font-weight: 700;
 }
 
-/* Buttons */
+p, label {
+    color: var(--ntts-ink);
+}
+
+small, .muted, .helptext {
+    color: var(--ntts-muted) !important;
+}
+
+/* ================= SIDEBAR ================= */
+
+.side {
+    background: var(--ntts-sidebar) !important;
+    color: #ffffff !important;
+}
+
+.side .brand,
+.side .brand small,
+.side .nav-label,
+.side .nav,
+.side .side-bottom {
+    color: #ffffff !important;
+}
+
+.side .nav-label {
+    opacity: 0.75;
+}
+
+.side .nav a,
+.side .side-bottom a {
+    color: var(--ntts-sidebar-text) !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.side .nav a:hover,
+.side .nav a.active {
+    background: var(--ntts-green) !important;
+    color: #ffffff !important;
+    border-radius: 10px;
+}
+
+.side .nav .ico,
+.side .nav a .ico {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* ================= TOP NAVIGATION ================= */
+
+.top,
+.bar {
+    background: #ffffff !important;
+    color: var(--ntts-ink) !important;
+    border-bottom: 1px solid var(--ntts-line) !important;
+}
+
+.top a,
+.bar a,
+.back {
+    color: var(--ntts-green) !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.top .crumb {
+    color: var(--ntts-muted) !important;
+}
+
+/* ================= DASHBOARD CARDS ================= */
+
+.stat,
+.panel,
+.panel-card,
+.card,
+.tile {
+    background: var(--ntts-card) !important;
+    color: var(--ntts-ink) !important;
+    border: 1px solid var(--ntts-line) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 28px rgba(23, 61, 37, 0.06) !important;
+}
+
+.tile b,
+.stat b {
+    color: var(--ntts-ink) !important;
+}
+
+.tile small,
+.stat .label {
+    color: var(--ntts-muted) !important;
+}
+
+.tile .icon {
+    background: var(--ntts-green-light) !important;
+    color: #087345 !important;
+    opacity: 1 !important;
+}
+
+/* ================= OWNER BADGE ================= */
+
+.owner {
+    background: var(--ntts-green-light) !important;
+    color: #17643c !important;
+}
+
+/* ================= BUTTONS ================= */
+
 button,
 .btn,
-a.button {
-    color: #FFFFFF !important;
-    background-color: #10844F;
+a.button,
+.actions a,
+.actions button {
+    background: var(--ntts-green) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--ntts-green) !important;
+    border-radius: 10px !important;
+    padding: 11px 17px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    opacity: 1 !important;
+    transition: all 0.2s ease !important;
 }
 
-/* Global Design Settings */
-input,
+button:hover,
+.btn:hover,
+a.button:hover,
+.actions a:hover,
+.actions button:hover {
+    background: var(--ntts-green-dark) !important;
+    border-color: var(--ntts-green-dark) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(16, 132, 79, 0.18);
+}
+
+button svg,
+.btn svg,
+.actions a svg {
+    stroke: currentColor;
+}
+
+/* ================= FORMS ================= */
+
+input:not([type=checkbox]),
 select,
 textarea {
-    color: #181C24 !important;
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 13px !important;
+    background: #ffffff !important;
+    color: var(--ntts-ink) !important;
+    border: 1px solid var(--ntts-line) !important;
+    border-radius: 10px !important;
+    font: inherit !important;
+    outline: none;
 }
 
-/* Preview text */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--ntts-green) !important;
+    box-shadow: 0 0 0 3px rgba(16, 132, 79, 0.12) !important;
+}
+
+/* ================= TABLES ================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+    background: #ffffff;
+}
+
+th {
+    color: #52645a !important;
+    background: #f4f8f5;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+td {
+    color: var(--ntts-ink) !important;
+}
+
+td, th {
+    padding: 14px 13px !important;
+    border-bottom: 1px solid #edf2ee !important;
+}
+
+td a {
+    color: var(--ntts-green) !important;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ================= NOTIFICATIONS ================= */
+
+.notice,
+.msg {
+    background: #eaf7ef !important;
+    color: #087345 !important;
+    border: 1px solid #d7eddf !important;
+    border-radius: 10px;
+    padding: 12px 15px;
+}
+
+.errors,
+.error {
+    color: #a32a2a !important;
+}
+
+/* ================= WEBSITE BUILDER ================= */
+
+.preview-website {
+    background: #ffffff;
+    color: var(--ntts-ink);
+}
+
 .preview-website h1,
 .preview-website h2,
+.preview-website h3,
 .preview-website p {
-    color: #181C24 !important;
+    color: var(--ntts-ink) !important;
 }
-/* Fix Add Section button visibility */
+
 a[href*="section"],
-button,
-.btn {
-    color: #FFFFFF !important;
-}
-
-/* Add Section button */
-a[href*="section"] {
-    background-color: #10844F !important;
-    border: 1px solid #10844F !important;
-    opacity: 1 !important;
-}
-
-/* Button hover */
-a[href*="section"]:hover {
-    background-color: #086B3E !important;
-    color: #FFFFFF !important;
-}
-/* Add Section button visibility fix */
 a[href*="builder"] {
-    color: #FFFFFF !important;
-    background-color: #10844F !important;
-    border: 1px solid #10844F !important;
+    background: var(--ntts-green) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--ntts-green) !important;
     opacity: 1 !important;
 }
 
+a[href*="section"]:hover,
 a[href*="builder"]:hover {
-    background-color: #086B3E !important;
-    color: #FFFFFF !important;
+    background: var(--ntts-green-dark) !important;
+    color: #ffffff !important;
+}
+
+/* ================= BRAND LOGO ================= */
+
+.cms-brand-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    background: #ffffff;
+    border: 1px solid var(--ntts-line);
+    border-radius: 11px;
+    padding: 3px;
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+
+@media (max-width: 720px) {
+    .wrap {
+        width: calc(100% - 28px) !important;
+        margin: 20px auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .panel,
+    .card {
+        padding: 16px !important;
+    }
+
+    .head {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+
+    .side .nav a {
+        color: #ffffff !important;
+    }
+
+    .actions {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    table {
+        min-width: 620px;
+    }
 }
