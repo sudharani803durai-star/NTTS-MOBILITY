@@ -1,0 +1,8 @@
+Django>=5.2,<5.3
+Pillow>=11.0
+python-dotenv>=1.0
+mysqlclient>=2.2
+requests>=2.31
+
+gunicorn>=23.0
+whitenoise>=6.8

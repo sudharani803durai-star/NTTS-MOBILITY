@@ -1,0 +1,18 @@
+NTTS MOBILITY — FONT COLOR, LIVE PREVIEW & RENDER CONFIG UPDATE
+
+Included:
+- Admin > Global Design Settings: heading, body and button text color fields.
+- Live color preview on the Global Website Design form.
+- Homepage CSS variables use saved theme colors and configured font families.
+- Migration 0007_site_theme_text_colors.py adds the three color fields.
+- WhiteNoise static-file serving, Gunicorn, build.sh, Procfile and render.yaml.
+
+Before deployment:
+1. Review .env.example and set SECRET_KEY, DEBUG=False, ALLOWED_HOSTS, Brevo SMTP and database environment variables in Render.
+2. IMPORTANT: render.yaml defaults to SQLite for a quick starter deployment. Render's local filesystem is ephemeral; use a persistent external database for production. This project currently supports MySQL or SQLite in settings.py; configure a reachable MySQL service by setting DB_ENGINE=mysql, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST and DB_PORT in Render.
+3. Check that the MySQL host allows connections from the Render service.
+4. Push the project to GitHub and create/update the Render Web Service using this repository. Set Root Directory to NTTS_MOBILITY_FullStack_Starter/backend if deploying from the repository root; the included render.yaml is intended to be placed at the backend root, so use that folder as the service root.
+5. Build command: ./build.sh. Start command: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+6. Confirm migration 0007 is applied and test /cms/theme/ and the public homepage.
+
+Validation note: source-level syntax checks are performed when possible, but a full Django/database/Render deployment test requires your actual environment variables and reachable database.

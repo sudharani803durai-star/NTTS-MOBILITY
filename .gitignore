@@ -1,0 +1,11 @@
+.env
+backend/.env
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/db.sqlite3
+backend/media/
+backend/staticfiles/
+backend/firebase-service-account.json
+backend/ntts-mobility-firebase-adminsdk-*.json

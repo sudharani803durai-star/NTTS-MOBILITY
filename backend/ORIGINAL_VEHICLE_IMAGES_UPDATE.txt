@@ -1,0 +1,21 @@
+NTTS MOBILITY - Original vehicle image update
+================================================
+This revision includes the four original vehicle image assets supplied by the user:
+- Compact Sedan
+- Premium Executive Sedan
+- Spacious SUV
+- Electric EV Plus
+
+They are stored in static/images/vehicles/.
+Homepage vehicle cards and the Dynamic Fleet carousel use these photos automatically
+when a vehicle does not have a custom image uploaded through CMS. A CMS-uploaded
+vehicle image takes priority.
+
+To run with your existing local database:
+1. Extract this ZIP into a NEW folder.
+2. Copy your existing backend/.env into the new backend folder (do not share secrets).
+3. Activate your virtual environment and install requirements if needed.
+4. Run: python manage.py migrate
+5. Run: python manage.py runserver
+
+No model or database migration is required for this image-only update.

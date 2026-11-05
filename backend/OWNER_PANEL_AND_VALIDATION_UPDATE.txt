@@ -1,0 +1,26 @@
+NTTS MOBILITY - OWNER PANEL & BOOKING VALIDATION UPDATE
+
+Changes:
+1. Public navigation now has separate Fleet, Rides, and Track Ride links.
+2. Removed the visible literal \\n artifact from booking success actions.
+3. Booking success tracking link uses the booking reference returned by the server.
+4. Booking form validates required pickup/destination/name, Indian mobile number, and ride date.
+5. Server-side validation rejects invalid Indian mobile numbers, malformed dates/times, and past ride dates.
+6. Track Ride lookup phone field has Indian mobile validation.
+7. CMS dashboard now requires a logged-in staff account and redirects anonymous visitors to /cms/login/.
+8. Admin sidebar label is clarified as Rides & Bookings.
+
+Run from backend:
+  python manage.py migrate
+  python manage.py runserver
+
+URLs:
+  Website:    http://127.0.0.1:8000/
+  Track Ride: http://127.0.0.1:8000/track-booking/
+  Owner:      http://127.0.0.1:8000/cms/
+  Login:      http://127.0.0.1:8000/cms/login/
+
+Testing:
+- Python syntax compilation passed for mobility/views.py.
+- Django manage.py check could not run here because Django is not installed in this packaging environment.
+- Run the commands above in the project's virtual environment and verify with its MySQL database.

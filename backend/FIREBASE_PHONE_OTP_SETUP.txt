@@ -1,0 +1,54 @@
+NTTS MOBILITY - FIREBASE PHONE OTP SETUP
+========================================
+
+The customer login page now uses Firebase Web Phone Authentication.
+The Django backend verifies the Firebase ID token with Firebase Admin SDK
+before creating/logging in the corresponding customer account.
+
+1. Install dependencies:
+   pip install -r requirements.txt
+
+2. Configure backend/.env with the Firebase Web app config shown in Firebase
+   Console > Project settings > Your apps. Use:
+   FIREBASE_API_KEY=
+   FIREBASE_AUTH_DOMAIN=ntts-mobility.firebaseapp.com
+   FIREBASE_PROJECT_ID=ntts-mobility
+   FIREBASE_STORAGE_BUCKET=
+   FIREBASE_MESSAGING_SENDER_ID=
+   FIREBASE_APP_ID=
+
+3. Firebase Console > Authentication > Settings > Authorized domains:
+   add localhost for local development and your exact deployed domain for production.
+
+4. Firebase Console > Authentication > Sign-in method:
+   ensure Phone is enabled. The Firebase Spark project shown by the user
+   displayed a limit of 10 SMS/day for this new project; check current quotas
+   and billing in Firebase before real customer rollout.
+
+5. Django must verify Firebase tokens. In Firebase Console:
+   Project settings > Service accounts > Generate new private key.
+   Save the downloaded JSON as backend/firebase-service-account.json.
+   Set FIREBASE_SERVICE_ACCOUNT=firebase-service-account.json in backend/.env.
+   NEVER commit or share this JSON. The service account private key is secret.
+   Do not put it in frontend JavaScript or a public static directory.
+
+6. Run:
+   python manage.py check
+   python manage.py makemigrations mobility
+   python manage.py migrate
+   python manage.py runserver
+
+7. Test with a real phone only after Firebase setup and authorized domains are
+   correct. Firebase may use reCAPTCHA and SMS quota/anti-abuse controls.
+
+IMPORTANT:
+- Firebase Web apiKey/appId are client configuration values, not service-account
+  credentials. Restrict the API key in Google Cloud when appropriate.
+- This integration was code-reviewed/compiled only in this packaging environment;
+  live Firebase SMS and database login have NOT been tested because the project
+  owner's Firebase service-account JSON, deployment domain, and runtime DB are
+  not available here.
+- Existing bookings made while logged out remain unlinked; do not expose them
+  automatically to a customer. New bookings while logged in are attached to
+  that customer's profile by the existing booking view.
+- Keep CMS staff login separate from customer Firebase login.

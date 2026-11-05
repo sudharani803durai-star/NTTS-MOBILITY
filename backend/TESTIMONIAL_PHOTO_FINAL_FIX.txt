@@ -1,0 +1,3 @@
+Final testimonial photo correction from the uploaded project.
+Root cause: previous packaged portrait assets were incorrect crops (they contained bits of alt text/blank page area), even though static files returned HTTP 200. The first three testimonial cards now always use the matching local Figma portrait files, instead of potentially broken CMS media URLs. Correct portraits were recropped from the Figma screenshot included in the conversation. CSS forces visible circular image rendering.
+No database migration required. Restart Django and hard refresh (Ctrl+F5).

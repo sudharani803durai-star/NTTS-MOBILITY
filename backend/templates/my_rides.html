@@ -1,0 +1,639 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Rides | NTTS Mobility</title>
+
+<link rel="stylesheet" href="{% static 'css/site.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --green: #10844f;
+    --dark: #181c24;
+    --muted: #718078;
+    --bg: #fbfbf9;
+    --border: #e7ece8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--dark);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Dashboard container */
+.page-wrap {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    padding: 30px 24px 55px;
+}
+
+/* Dashboard hero - separate from homepage hero */
+.dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(115deg, #102d20, #10844f);
+    color: #fff;
+    border-radius: 20px;
+    padding: 30px 34px;
+    min-height: auto;
+    height: auto;
+    box-shadow: 0 12px 32px rgba(16,132,79,.13);
+    animation: fadeUp .5s ease both;
+}
+
+.dashboard-hero::after {
+    content: "✦";
+    position: absolute;
+    right: 55px;
+    top: -65px;
+    font-size: 205px;
+    line-height: 1;
+    color: rgba(255,255,255,.07);
+    pointer-events: none;
+}
+
+.dashboard-tag {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,.13);
+    border: 1px solid rgba(255,255,255,.22);
+    padding: 7px 13px;
+    border-radius: 30px;
+    color: #d8f5e4;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.dashboard-hero h1 {
+    position: relative;
+    z-index: 1;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(27px, 3.2vw, 38px);
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 18px 0 9px;
+    color: #fff;
+}
+
+.dashboard-hero p {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0;
+    color: #e3f2e9;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.hero-actions {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 11px;
+    margin-top: 22px;
+}
+
+.hero-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 45px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: .25s ease;
+}
+
+.btn-white {
+    background: #fff;
+    color: var(--green);
+}
+
+.btn-outline {
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.5);
+}
+
+.hero-actions a:hover {
+    transform: translateY(-2px);
+}
+
+/* Section heading */
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 30px 0 17px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font: 700 24px 'Space Grotesk', sans-serif;
+    color: var(--dark);
+}
+
+.section-heading span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* Booking card */
+.ride-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 15px;
+    padding: 22px;
+    box-shadow: 0 5px 20px rgba(16,46,32,.045);
+    transition: transform .25s, box-shadow .25s;
+    animation: fadeUp .45s ease both;
+}
+
+.ride-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(16,46,32,.09);
+}
+
+.ride-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #edf1ee;
+}
+
+.booking-label {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.booking-id {
+    font: 700 18px 'Space Grotesk', sans-serif;
+    margin-top: 5px;
+    color: var(--dark);
+}
+
+.ride-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #eaf8ef;
+    color: #087346;
+    padding: 7px 13px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* Pickup and destination */
+.ride-route {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.route-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+.route-icon {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: #eaf7ef;
+    color: var(--green);
+    font-size: 17px;
+}
+
+.route-item small {
+    display: block;
+    color: #87928b;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 5px;
+}
+
+.route-item strong {
+    display: block;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    color: var(--dark);
+}
+
+/* Ride details */
+.ride-info {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 15px 0;
+    border-top: 1px solid #edf1ee;
+}
+
+.info-item small {
+    display: block;
+    color: #87928b;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.info-item strong {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.ride-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 13px;
+    padding-top: 15px;
+    border-top: 1px solid #edf1ee;
+}
+
+.vehicle-label {
+    font-size: 12px;
+    color: #68766e;
+}
+
+.vehicle-label strong {
+    color: var(--dark);
+}
+
+.track-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border-radius: 9px;
+    background: var(--green);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .25s;
+}
+
+.track-btn:hover {
+    background: #086d40;
+    transform: translateY(-2px);
+}
+
+/* Empty bookings */
+.empty-card {
+    text-align: center;
+    padding: 48px 22px;
+    background: white;
+    border: 1px dashed #cbd9d0;
+    border-radius: 17px;
+    margin-top: 15px;
+}
+
+.empty-icon {
+    width: 65px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    margin: auto;
+    background: #eaf7ef;
+    color: var(--green);
+    border-radius: 19px;
+    font-size: 28px;
+}
+
+.empty-card h3 {
+    font: 700 21px 'Space Grotesk', sans-serif;
+    margin: 16px 0 7px;
+}
+
+.empty-card p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.empty-card a {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.footer-note {
+    text-align: center;
+    color: #87928b;
+    font-size: 11px;
+    margin-top: 30px;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Responsive */
+@media(max-width: 700px) {
+    .page-wrap {
+        padding: 22px 15px 45px;
+    }
+
+    .dashboard-hero {
+        padding: 25px 21px;
+        border-radius: 16px;
+    }
+
+    .dashboard-hero::after {
+        right: -25px;
+        top: -30px;
+        font-size: 130px;
+    }
+
+    .dashboard-hero h1 {
+        font-size: 27px;
+    }
+
+    .dashboard-hero p {
+        font-size: 13px;
+    }
+
+    .hero-actions a {
+        min-height: 42px;
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        margin: 25px 0 14px;
+    }
+
+    .section-heading h2 {
+        font-size: 22px;
+    }
+
+    .ride-card {
+        padding: 17px;
+    }
+
+    .ride-route {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .ride-info {
+        gap: 15px 22px;
+    }
+
+    .ride-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .track-btn {
+        width: 100%;
+    }
+}
+</style>
+<style id="ntts-global-theme">:root{--ntts-primary:{% if site_theme %}{{ site_theme.primary_color }}{% else %}#10844F{% endif %};--ntts-dark:{% if site_theme %}{{ site_theme.dark_color }}{% else %}#181C24{% endif %};--ntts-bg:{% if site_theme %}{{ site_theme.background_color }}{% else %}#FBFBF9{% endif %};--ntts-heading:{% if site_theme %}{{ site_theme.heading_text_color }}{% else %}#181C24{% endif %};--ntts-body:{% if site_theme %}{{ site_theme.body_text_color }}{% else %}#475569{% endif %};--ntts-button-text:{% if site_theme %}{{ site_theme.button_text_color }}{% else %}#FFFFFF{% endif %};--ntts-radius:{% if site_theme %}{{ site_theme.border_radius }}{% else %}16{% endif %}px}body{font-family:{% if site_theme %}"{{ site_theme.font_body }}"{% else %}Poppins{% endif %},sans-serif}h1,h2,h3,h4,h5,h6{font-family:{% if site_theme %}"{{ site_theme.font_heading }}"{% else %}"Space Grotesk"{% endif %},sans-serif} .ntts-theme-preview-text{color:var(--ntts-body)} .ntts-theme-button{background:var(--ntts-primary);color:var(--ntts-button-text)} </style>
+</head>
+
+<body>
+
+<!-- Homepage-style navigation -->
+<header class="site-nav">
+    <a class="logo" href="/" aria-label="NTTS Mobility home">
+        <img
+            src="{% static 'images/ntts-logo-figma.png' %}"
+            alt="NTTS Mobility"
+            class="brand-logo">
+    </a>
+
+    <button class="menu-toggle" id="menuBtn" aria-label="Toggle navigation">
+        ☰
+    </button>
+
+    <nav id="navLinks">
+        <a href="/">Home</a>
+        <a href="/#fleet-motion">Fleet</a>
+        <a href="/#pricing">Pricing</a>
+        <a class="active" href="/my-rides/">My Rides</a>
+        <a href="/customer/profile/">Profile</a>
+        <a href="/customer/logout/">Logout</a>
+    </nav>
+
+    <a href="/#booking" class="nav-book">
+        Book a Ride <span>↗</span>
+    </a>
+</header>
+
+<main class="page-wrap">
+
+    <section class="dashboard-hero">
+
+        <span class="dashboard-tag">
+            NTTS MOBILITY · CUSTOMER DASHBOARD
+        </span>
+
+        <h1>Your Rides, All in One Place.</h1>
+
+        <p>
+            Welcome back, {{ profile.full_name|default:profile.phone }}.
+            Manage your bookings, check your ride details and track your journey.
+        </p>
+
+        <div class="hero-actions">
+            <a href="/#booking" class="btn-white">
+                + Book a New Ride
+            </a>
+
+            <a href="/customer/profile/" class="btn-outline">
+                Edit Profile
+            </a>
+        </div>
+
+    </section>
+
+    <div class="section-heading">
+        <h2>My Bookings</h2>
+        <span>Your ride history</span>
+    </div>
+
+    {% for b in bookings %}
+
+    <article class="ride-card">
+
+        <div class="ride-top">
+
+            <div>
+                <div class="booking-label">
+                    BOOKING REFERENCE
+                </div>
+
+                <div class="booking-id">
+                    NTTS-{{ b.id|stringformat:"05d" }}
+                </div>
+            </div>
+
+            <span class="ride-status">
+                <span class="status-dot"></span>
+                {{ b.get_status_display }}
+            </span>
+
+        </div>
+
+        <div class="ride-route">
+
+            <div class="route-item">
+                <div class="route-icon">⌖</div>
+
+                <div>
+                    <small>Pickup Location</small>
+                    <strong>{{ b.pickup }}</strong>
+                </div>
+            </div>
+
+            <div class="route-item">
+                <div class="route-icon">⚑</div>
+
+                <div>
+                    <small>Drop Location</small>
+                    <strong>{{ b.destination }}</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ride-info">
+
+            <div class="info-item">
+                <small>Ride Date</small>
+                <strong>
+                    {{ b.ride_date|default:"Not specified" }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <small>Ride Time</small>
+                <strong>
+                    {{ b.ride_time|default:"Not specified" }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <small>Passenger</small>
+                <strong>
+                    {{ b.passenger_name|default:profile.full_name }}
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="ride-footer">
+
+            <div class="vehicle-label">
+                Vehicle:
+                <strong>{{ b.vehicle.name|default:"Not selected" }}</strong>
+            </div>
+
+            <a class="track-btn" href="/my-rides/{{ b.id }}/track/">
+                Track This Ride <span>→</span>
+            </a>
+
+        </div>
+
+    </article>
+
+    {% empty %}
+
+    <section class="empty-card">
+
+        <div class="empty-icon">⌖</div>
+
+        <h3>No Bookings Found</h3>
+
+        <p>
+            Your rides will appear here once your booking is linked
+            to your customer account.
+        </p>
+
+        <a href="/#booking">
+            Book Your First Ride →
+        </a>
+
+    </section>
+
+    {% endfor %}
+
+    <div class="footer-note">
+        © NTTS Mobility · Your journey, our responsibility.
+    </div>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener("click", function () {
+            navLinks.classList.toggle("active");
+        });
+    }
+});
+</script>
+
+</body>
+</html>

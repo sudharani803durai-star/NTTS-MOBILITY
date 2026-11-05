@@ -1,0 +1,17 @@
+NTTS MOBILITY - FONT COLOR, PREVIEW, RENDER AND MY RIDES UPDATE
+
+Changes included:
+1. Admin logged in -> clicking My Rides now opens the Customer Login page, not CMS dashboard.
+2. After successful customer email OTP verification, the browser session switches to the customer account.
+3. Global SiteTheme is available to all Django templates through a context processor.
+4. Global font and color CSS variables are included in rendered HTML pages; the CMS theme form has a live preview.
+5. Render deployment files from the previous package are retained (render.yaml, build.sh, Procfile, WhiteNoise settings).
+
+Deploy steps:
+- Extract this ZIP and push the updated backend to the GitHub repository connected to Render.
+- In Render, verify Root Directory points to backend (folder containing render.yaml/build.sh).
+- Set SECRET_KEY, ALLOWED_HOSTS (your actual .onrender.com hostname), EMAIL_HOST_USER, EMAIL_HOST_PASSWORD (Brevo SMTP key), DEFAULT_FROM_EMAIL.
+- IMPORTANT: the included render.yaml config currently selects SQLite. Render's local filesystem is ephemeral unless a persistent disk is configured. For production customer bookings, use a managed persistent database (PostgreSQL or externally reachable MySQL) and set matching DB environment variables. Do not assume SQLite data persists across redeploys.
+- After deploy, open /cms/theme/, save theme, then verify homepage and customer pages.
+
+Validation: Python syntax compilation is performed for edited Python files. Full Django checks, database migrations, email OTP delivery and live Render deployment must be tested in the actual configured environment.

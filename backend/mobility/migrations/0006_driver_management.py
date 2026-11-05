@@ -1,0 +1,36 @@
+# Generated for NTTS MOBILITY driver management.
+from django.db import migrations, models
+import django.db.models.deletion
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('mobility', '0005_merge_0003_customer_accounts_0004_merge_20261104_2325'),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Driver',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('full_name', models.CharField(max_length=120)),
+                ('phone', models.CharField(max_length=25, unique=True)),
+                ('email', models.EmailField(blank=True, max_length=254)),
+                ('licence_number', models.CharField(max_length=80, unique=True)),
+                ('licence_expiry', models.DateField(blank=True, null=True)),
+                ('status', models.CharField(choices=[('available', 'Available'), ('on_trip', 'On Trip'), ('offline', 'Offline')], default='available', max_length=20)),
+                ('is_active', models.BooleanField(default=True)),
+                ('photo', models.ImageField(blank=True, upload_to='drivers/')),
+                ('notes', models.TextField(blank=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('assigned_vehicle', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='assigned_drivers', to='mobility.vehicle')),
+            ],
+            options={'ordering': ['full_name']},
+        ),
+        migrations.AddField(
+            model_name='booking',
+            name='driver',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bookings', to='mobility.driver'),
+        ),
+    ]

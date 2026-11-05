@@ -1,0 +1,10 @@
+NTTS MOBILITY – Figma visual update (04 Nov 2026)
+
+Updated in this package:
+- How It Works: replaced placeholder glyphs with inline SVG location-pin, slider-controls, and shield-check icons; matched green/blue icon treatments.
+- Pricing: highlighted the third vehicle pricing card as Most Popular, with green border, lift, shadow, and hover styling.
+- Testimonials: adjusted card sizing, spacing, profile-photo framing, verified badge styling, and section background.
+- Footer: refined logo sizing, columns, spacing, background, and replaced text glyphs with SVG globe/share/heart icons.
+
+No database migration is included or required for these visual-only changes.
+Run the same project setup and server commands already documented in README.md.

@@ -1,0 +1,20 @@
+NTTS MOBILITY - BREVO EMAIL OTP SETUP
+
+1. In Brevo, open Settings / SMTP & API and generate an SMTP key. Use the SMTP login shown by Brevo as EMAIL_HOST_USER and the SMTP key as EMAIL_HOST_PASSWORD. Do not use your Brevo account password.
+2. Verify the sender email address in Brevo. Set that exact address as DEFAULT_FROM_EMAIL.
+3. Create backend/.env from backend/.env.example (or update your existing .env) and set:
+   EMAIL_HOST=smtp-relay.brevo.com
+   EMAIL_PORT=587
+   EMAIL_USE_TLS=True
+   EMAIL_HOST_USER=your Brevo SMTP login
+   EMAIL_HOST_PASSWORD=your Brevo SMTP key
+   DEFAULT_FROM_EMAIL=your verified sender email
+4. Keep DEBUG=True only for local development. Do not commit .env or SMTP keys.
+5. Install requirements: pip install -r requirements.txt
+6. Run: python manage.py check
+7. Start: python manage.py runserver
+8. Open /customer/login/. Enter the registered mobile number and email, request OTP, then enter the six-digit code received by email. OTP expires in five minutes. A 60-second resend cooldown is enabled.
+
+No Firebase Phone Auth, Firebase Admin SDK, or SMS is used by this customer login flow.
+
+Note: OTP is stored in Django's default cache. The default local-memory cache is suitable for local testing only. For multi-worker/production deployment, configure a shared cache such as Redis so OTP verification works across workers.

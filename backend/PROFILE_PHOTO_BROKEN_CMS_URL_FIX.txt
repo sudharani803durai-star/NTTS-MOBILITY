@@ -1,0 +1,5 @@
+Fixed testimonial profile photos not appearing.
+Root cause: when a CMS testimonial photo existed but its stored media URL was broken, Django still rendered that broken URL and never used the local fallback image. The previous fallback only applied when no photo was uploaded.
+Fix: added an onerror handler to the CMS photo image so a failed photo automatically switches to the matching local Figma-reference portrait for each of the first three testimonials. Kept circular portrait styling and packaged the three local images.
+No database migration required.
+After extracting, restart Django and hard-refresh the page (Ctrl+F5). If the site is deployed, deploy these updated files too.

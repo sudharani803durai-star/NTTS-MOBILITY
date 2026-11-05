@@ -1,0 +1,76 @@
+
+/* NTTS Mobility CMS shared design system */
+:root{--ntts-green:#10844f;--ntts-ink:#181c24;--ntts-bg:#f5f8f6;--ntts-line:#e3ebe5;--ntts-muted:#718078}
+body{font-family:Poppins,system-ui,sans-serif!important;color:var(--ntts-ink)}
+button,.btn,.actions a,.actions button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+button:hover,.btn:hover,.actions a:hover,.actions button:hover{transform:translateY(-1px);box-shadow:0 8px 20px #10844f20}
+input:not([type=checkbox]),select,textarea{max-width:100%;border:1px solid var(--ntts-line)!important;border-radius:11px!important;padding:12px 13px!important;font:inherit!important;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--ntts-green)!important;box-shadow:0 0 0 3px #10844f18}
+table{min-width:650px}
+th{font-weight:700!important;letter-spacing:.03em}
+td,th{padding:14px 13px!important}
+.panel,.panel-card,.card{box-shadow:0 12px 35px #1b38240a}
+@media(max-width:720px){.wrap{margin-top:22px!important;padding-left:14px!important;padding-right:14px!important}.panel{padding:16px!important}.head h1,h1{font-size:25px!important}}
+/* Website Builder text visibility */
+
+body {
+    color: #181C24 !important;
+}
+
+/* Headings and paragraphs */
+h1, h2, h3, p, label, span {
+    color: #181C24;
+}
+
+/* Buttons */
+button,
+.btn,
+a.button {
+    color: #FFFFFF !important;
+    background-color: #10844F;
+}
+
+/* Global Design Settings */
+input,
+select,
+textarea {
+    color: #181C24 !important;
+}
+
+/* Preview text */
+.preview-website h1,
+.preview-website h2,
+.preview-website p {
+    color: #181C24 !important;
+}
+/* Fix Add Section button visibility */
+a[href*="section"],
+button,
+.btn {
+    color: #FFFFFF !important;
+}
+
+/* Add Section button */
+a[href*="section"] {
+    background-color: #10844F !important;
+    border: 1px solid #10844F !important;
+    opacity: 1 !important;
+}
+
+/* Button hover */
+a[href*="section"]:hover {
+    background-color: #086B3E !important;
+    color: #FFFFFF !important;
+}
+/* Add Section button visibility fix */
+a[href*="builder"] {
+    color: #FFFFFF !important;
+    background-color: #10844F !important;
+    border: 1px solid #10844F !important;
+    opacity: 1 !important;
+}
+
+a[href*="builder"]:hover {
+    background-color: #086B3E !important;
+    color: #FFFFFF !important;
+}

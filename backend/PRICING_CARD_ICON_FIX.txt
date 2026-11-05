@@ -1,0 +1,1 @@
+Pricing update: removed the permanent third-card highlight and Most Popular badge. All pricing cards now share the same neutral border and background; each card has a car icon in its upper-right corner. Hover highlighting remains available on whichever card the pointer is over. No database migration required.

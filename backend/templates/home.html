@@ -1,0 +1,153 @@
+{% load static %}
+
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10844F"><title>{% if content %}{{ content.brand_name }}{% else %}NTTS MOBILITY{% endif %} | Your Ride, Your Way</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="{% static 'css/site.css' %}"><style>:root{--brand:{% if site_theme %}{{ site_theme.primary_color }}{% else %}#10844F{% endif %};--ink:{% if site_theme %}{{ site_theme.dark_color }}{% else %}#181C24{% endif %};--page-bg:{% if site_theme %}{{ site_theme.background_color }}{% else %}#FBFBF9{% endif %};--heading-text:{% if site_theme %}{{ site_theme.heading_text_color }}{% else %}#181C24{% endif %};--body-text:{% if site_theme %}{{ site_theme.body_text_color }}{% else %}#475569{% endif %};--button-text:{% if site_theme %}{{ site_theme.button_text_color }}{% else %}#FFFFFF{% endif %};--heading-font:{% if site_theme %}{{ site_theme.font_heading }}{% else %}Space Grotesk{% endif %};--body-font:{% if site_theme %}{{ site_theme.font_body }}{% else %}Poppins{% endif %};--site-radius:{% if site_theme %}{{ site_theme.border_radius }}{% else %}16{% endif %}px}body{background:var(--page-bg);color:var(--body-text);font-family:var(--body-font),sans-serif}h1,h2,h3,h4,h5,h6{font-family:var(--heading-font),sans-serif}.section:not(.hero) h2,.section:not(.hero) h3,.fleet-copy h3,.price-card h3,.step-card h3,.safety-grid h3,.review-card blockquote{color:var(--heading-text)}.section:not(.hero) p,.step-card p,.safety-grid p,.review-card small{color:var(--body-text)}.submit-book,.nav-book,.btn-green,.price-card>a{color:var(--button-text)}.builder-block{padding:64px 7%;margin:20px auto;max-width:1280px}.builder-block-inner{max-width:1000px;margin:auto}.builder-block h2{font:700 36px 'Space Grotesk';margin:12px 0}.builder-block-body{line-height:1.8}.builder-block img{max-width:100%;max-height:380px;object-fit:cover;border-radius:var(--site-radius);margin-top:20px}.builder-banner{text-align:center}.builder-split .builder-block-inner{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}.builder-split .builder-block-inner img{grid-column:2;grid-row:1/4}.builder-block .btn-green{display:inline-block;color:white;padding:12px 18px;border-radius:10px;text-decoration:none;margin-top:18px}@media(max-width:700px){.builder-split .builder-block-inner{display:block}.builder-block{padding:36px 22px}}
+.custom-time-box{margin:12px 0 16px;padding:14px 16px;background:rgba(16,132,79,.08);border:1px solid rgba(16,132,79,.22);border-radius:12px;animation:customTimeIn .22s ease}
+.custom-time-box[hidden]{display:none}
+.custom-time-box label{display:block;margin-bottom:8px;font-weight:600}
+.custom-time-box input{width:100%;min-height:46px;padding:10px 12px;border:1px solid rgba(16,132,79,.35);border-radius:9px;background:#fff;color:#181C24;font:inherit}
+.custom-time-box small{display:block;margin-top:7px;color:#68736d}
+@keyframes customTimeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+</style><style id="ntts-global-theme">:root{--ntts-primary:{% if site_theme %}{{ site_theme.primary_color }}{% else %}#10844F{% endif %};--ntts-dark:{% if site_theme %}{{ site_theme.dark_color }}{% else %}#181C24{% endif %};--ntts-bg:{% if site_theme %}{{ site_theme.background_color }}{% else %}#FBFBF9{% endif %};--ntts-heading:{% if site_theme %}{{ site_theme.heading_text_color }}{% else %}#181C24{% endif %};--ntts-body:{% if site_theme %}{{ site_theme.body_text_color }}{% else %}#475569{% endif %};--ntts-button-text:{% if site_theme %}{{ site_theme.button_text_color }}{% else %}#FFFFFF{% endif %};--ntts-radius:{% if site_theme %}{{ site_theme.border_radius }}{% else %}16{% endif %}px}body{font-family:{% if site_theme %}"{{ site_theme.font_body }}"{% else %}Poppins{% endif %},sans-serif}h1,h2,h3,h4,h5,h6{font-family:{% if site_theme %}"{{ site_theme.font_heading }}"{% else %}"Space Grotesk"{% endif %},sans-serif} .ntts-theme-preview-text{color:var(--ntts-body)} .ntts-theme-button{background:var(--ntts-primary);color:var(--ntts-button-text)} </style>
+</head><body>
+
+<header class="site-nav"><a class="logo" href="#home" aria-label="NTTS Mobility home"><img src="{% static 'images/ntts-logo-figma.png' %}" alt="NTTS Mobility" class="brand-logo"></a><button class="menu-toggle" id="menuBtn" aria-label="Toggle navigation">☰</button><nav id="navLinks"><a class="active" href="#home">Home</a><a href="#fleet-motion">Fleet</a><a href="/my-rides/">My Rides</a><a href="#process">How It Works</a><a href="#safety">Safety</a><a href="#pricing">Pricing</a></nav><button class="nav-book js-open-booking" type="button">Book a Ride <span>↗</span></button></header>
+
+<main id="home">
+
+<section class="hero"><div class="hero-shade"></div><div class="hero-inner"><div class="phone-mock reveal"><div class="phone-screen"><div class="phone-notch"></div><div class="tracking-pill">● &nbsp;Tracking Chauffeur</div><div class="map-grid"><span class="route-line"></span><i class="pin pin-a"></i><i class="pin pin-b">➤</i><i class="pin pin-c"></i></div><div class="phone-driver"><div class="car-icon">▣</div><div><b>NTTS Luxe EV</b><small>Ioniq 5 / Tesla • Emerald</small></div><strong>NTTS Fleet<small>0.8 km away</small></strong><hr><div class="avatar">RS</div><div><b>Rajesh S.</b><small>★ 4.98 (1,420 trips)</small></div><span class="phone-actions">☎　▤</span></div></div></div>
+
+<div class="hero-content reveal"><span class="eyebrow hero-tag">● &nbsp; NEXT-GEN URBAN TRANSIT</span><h1>{% if content %}{{ content.hero_title }}{% else %}Your Ride, Your Way — <em>Anytime, Anywhere</em>{% endif %}</h1><p>{% if content %}{{ content.hero_subtitle }}{% else %}Fast, safe, and sustainable rides at your fingertips. Experience the future of urban mobility with real-time dispatch, eco-certified EV fleets, and zero surge surprises.{% endif %}</p></div>
+
+<div class="booking-card reveal" id="booking"><div class="booking-top"><h2>Book Instantly</h2><span>ϟ Avg ETA 2.4 min</span></div><form id="bookingForm">{% csrf_token %}<label>Pickup point<input name="pickup" required minlength="3" maxlength="180" placeholder="e.g. Cyber City Hub, Gate 4"></label><label>Destination<input name="destination" required minlength="3" maxlength="180" placeholder="e.g. International Tech Terminal 2"></label><div class="form-row"><label>Date<input name="ride_date" type="date" id="rideDate" min="{% now 'Y-m-d' %}"></label><label for="ride_time">Ride window
+<select name="ride_time" id="ride_time">
+<option value="">Depart Now</option>
+<option value="08:00">08:00 AM</option>
+<option value="12:00">12:00 PM</option>
+<option value="18:00">06:00 PM</option>
+<option value="custom">Custom Time</option>
+</select>
+</label></div>
+<div class="custom-time-box" id="customTimeBox" hidden>
+<label for="custom_time">Choose your preferred time</label>
+<input type="time" id="custom_time" name="custom_time">
+<small>Select the time you want your ride to depart.</small>
+</div>
+<div class="form-row"><label>Your name<input name="passenger_name" required minlength="2" maxlength="120" placeholder="Full name"></label><label>Phone number<input name="phone" type="tel" required inputmode="numeric" autocomplete="tel" pattern="(?:\\+?91[\s-]?)?[6-9][0-9]{9}" maxlength="14" title="Enter a valid 10-digit Indian mobile number" placeholder="+91 98765 43210"></label></div><label class="optional">Email (optional)<input name="email" type="email" placeholder="you@example.com"></label><label>Choose vehicle<select name="vehicle_id"><option value="">Select your ride</option>{% for v in vehicles %}<option value="{{ v.id }}">{{ v.name }} — ₹{{ v.base_fare }} base</option>{% endfor %}</select></label><button class="submit-book" type="submit">Book Instantly <span>→</span></button><div class="form-message" id="formMessage" aria-live="polite"></div></form></div></div></section>
+
+<section class="fleet-motion" id="fleet-motion">
+
+<div class="fleet-heading"><div><span>● &nbsp; {% if content %}{{ content.fleet_subtitle }}{% else %}NTTS LIVE MOBILITY DECK{% endif %}</span><h2>{% if content %}{{ content.fleet_heading }}{% else %}Dynamic Fleet in Motion{% endif %}</h2></div>
+
+<div class="fleet-tabs" role="tablist" aria-label="Choose fleet vehicle">{% for v in showcase_vehicles %}<button type="button" class="fleet-tab{% if forloop.first %} selected{% endif %}" data-fleet-index="{{ forloop.counter0 }}">{{ v.category|default:v.name }}</button>{% endfor %}</div></div>
+
+<div class="fleet-showcase fleet-carousel" aria-live="polite">
+
+{% for v in showcase_vehicles %}<article class="fleet-slide{% if forloop.first %} active{% endif %}" data-fleet-slide="{{ forloop.counter0 }}">
+
+<div class="fleet-copy"><span class="mini-tag">● {{ v.showcase_label }}</span><h3>{{ v.name }}</h3><p>{{ v.description }}</p>
+
+<div class="fleet-specs"><span>Cabin Space<strong>{{ v.capacity }}</strong></span><span>Luggage<strong>{{ v.luggage }}</strong></span><span>Privacy Tint<strong>{{ v.privacy_tint }}</strong></span><span>Rating<strong>★ {{ v.rating }}</strong></span></div></div>
+
+<div class="showcase-car">{% if v.image %}<img src="{{ v.image.url }}" alt="{{ v.name }}">{% elif "Compact" in v.name %}<img src="{% static 'images/vehicles/compact-sedan.png' %}" alt="{{ v.name }}">{% elif "Executive" in v.name %}<img src="{% static 'images/vehicles/executive-sedan.png' %}" alt="{{ v.name }}">{% elif "SUV" in v.name %}<img src="{% static 'images/vehicles/spacious-suv.png' %}" alt="{{ v.name }}">{% else %}<img src="{% static 'images/vehicles/electric-ev-plus.png' %}" alt="{{ v.name }}">{% endif %}</div></article>{% empty %}<div class="fleet-empty">Add vehicles and upload their photos in the CMS Fleet &amp; Pricing section.</div>{% endfor %}
+
+</div><div class="fleet-bottom"><div class="fleet-controls"><button type="button" class="fleet-arrow" id="fleetPrev" aria-label="Previous vehicle">‹</button><button type="button" class="fleet-arrow" id="fleetNext" aria-label="Next vehicle">›</button><span>Auto-synced fleet showcase · Select a vehicle to explore</span></div><div class="fleet-dots" id="fleetDots">{% for v in showcase_vehicles %}
+<button type="button" class="fleet-dot{% if forloop.first %} active{% endif %}" data-fleet-index="{{ forloop.counter0 }}" aria-label="Show {{ v.name }}"></button>{% endfor %}</div></div></section>
+
+<section class="stats-row"><article><b>{% if content %}{{ content.stats_one_value }}{% else %}10M+{% endif %}</b><span>{% if content %}{{ content.stats_one_label }}{% else %}Rides Completed Safely{% endif %}</span></article><article><b>{% if content %}{{ content.stats_two_value }}{% else %}4.9{% endif %}<span class="star">★</span></b><span>{% if content %}{{ content.stats_two_label }}{% else %}Avg Customer Satisfaction{% endif %}</span></article><article><b>{% if content %}{{ content.stats_three_value }}{% else %}50+{% endif %}</b><span>{% if content %}{{ content.stats_three_label }}{% else %}Metros &amp; Cities Worldwide{% endif %}</span></article><article><b>{% if content %}{{ content.stats_four_value }}{% else %}24/7{% endif %}</b><span>{% if content %}{{ content.stats_four_label }}{% else %}Human Concierge &amp; Safety{% endif %}</span></article></section>
+
+<section class="section fleet-section" id="fleet"><div class="section-heading"><div><span class="eyebrow">FLEET &amp; RIDES</span><h2>{% if content %}{{ content.rides_heading }}{% else %}Choose Your Ride{% endif %}</h2><p>{% if content %}{{ content.rides_subtitle }}{% else %}Tailored transportation solutions calibrated for speed, comfort, or solo sprints.{% endif %}</p></div><span class="carbon">♧ &nbsp;{% if content %}{{ content.carbon_badge_text }}{% else %}100% Carbon-Neutral Fleet Options{% endif %}</span></div><div class="vehicle-grid">{% for v in vehicles %}<article class="vehicle-card reveal"><div class="vehicle-image"><span class="vehicle-badge">{% if v.is_featured %}TOP TIER{% else %}{{ v.category }}{% endif %}</span>{% if v.image %}<img src="{{ v.image.url }}" alt="{{ v.name }}">{% elif "Compact" in v.name %}<img src="{% static 'images/vehicles/compact-sedan.png' %}" alt="{{ v.name }}">{% elif "Executive" in v.name %}<img src="{% static 'images/vehicles/executive-sedan.png' %}" alt="{{ v.name }}">{% elif "SUV" in v.name %}<img src="{% static 'images/vehicles/spacious-suv.png' %}" alt="{{ v.name }}">{% else %}<img src="{% static 'images/vehicles/electric-ev-plus.png' %}" alt="{{ v.name }}">{% endif %}</div><div class="vehicle-info"><div class="vehicle-title"><h3>{{ v.name }}</h3><b>₹{{ v.base_fare }} <small>base</small></b></div><p>{{ v.description }}</p><div class="vehicle-tags"><span>{{ v.capacity }}</span><span>₹{{ v.per_km_fare }}/km</span><span>Air-conditioned</span></div><a href="#booking" class="vehicle-cta js-book-vehicle" data-vehicle="{{ v.name }}">Book {{ v.name }} <b>→</b></a></div></article>{% empty %}<p class="empty-state">Add your vehicles from the CMS dashboard.</p>{% endfor %}</div></section>
+
+<section class="section process-section" id="process"><div class="center-heading"><span class="eyebrow">THE PROCESS</span><h2>{% if content %}{{ content.process_heading }}{% else %}Ride in 3 Simple Steps{% endif %}</h2><p>{% if content %}{{ content.process_subtitle }}{% else %}From tapping your screen to stepping out at your destination—zero friction, all precision.{% endif %}</p></div><div class="steps-grid"><article class="step-card"><div class="step-top"><span>STEP 01</span><b class="safety-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28s9-8.1 9-16a9 9 0 1 0-18 0c0 7.9 9 16 9 16Z"/><circle cx="16" cy="12" r="3.2"/><path d="M7 30h18"/></svg></b></div><h3>{% if content %}{{ content.process_step_one_title }}{% else %}Enter Your Destination{% endif %}</h3><p>{% if content %}{{ content.process_step_one_body }}{% else %}Type in your pickup point or allow the geo-sensor to lock onto your precise spot automatically.{% endif %}</p><small>● &nbsp;Instant GPS coordinate detection</small></article><article class="step-card"><div class="step-top"><span>STEP 02</span><b class="safety-icon blue"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8h24M4 16h24M4 24h24"/><path d="M11 5v6M22 13v6M15 21v6"/></svg></b></div><h3>{% if content %}{{ content.process_step_two_title }}{% else %}Choose Your Ride{% endif %}</h3><p>{% if content %}{{ content.process_step_two_body }}{% else %}Compare transparent upfront fares, precise vehicle models, and driver distance before locking in.{% endif %}</p><small>● &nbsp;Locked fixed price — no surprises</small></article><article class="step-card"><div class="step-top"><span>STEP 03</span><b class="safety-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7.2-4.8 11.8-11 14-6.2-2.2-11-6.8-11-14V7l11-4Z"/><path d="m11 16 3.3 3.3L21.5 12"/></svg></b></div><h3>{% if content %}{{ content.process_step_three_title }}{% else %}Sit Back &amp; Relax{% endif %}</h3><p>{% if content %}{{ content.process_step_three_body }}{% else %}Track your driver's real-time trajectory, share ride details with loved ones, and pay cashlessly.{% endif %}</p><small>● &nbsp;Encrypted telemetry &amp; live track</small></article></div><div class="dispatch-strip"><b>ϟ</b><div><h3>Sub-Second Driver Allocation</h3><p>Our edge routing engine matches you with the ideal nearby partner in less than 400ms.</p></div><strong>99.98% DISPATCH UPTIME</strong></div></section>
+
+<section class="section safety-section" id="safety"><div class="safety-intro"><span class="eyebrow">ISO 27001 CERTIFIED SAFETY</span><h2>{% if content %}{{ content.safety_heading }}{% else %}Your Safety is Our Priority{% endif %}</h2><p>{% if content %}{{ content.safety_subtitle }}{% else %}From algorithmic background vetting to emergency rapid-response teams on standby, our security infrastructure protects every single kilometer.{% endif %}</p><div class="shield-box"><b>♧ &nbsp;NTTS Shield™ Active</b><p>Every trip automatically benefits from round-the-clock incident monitoring and insurance cover.</p></div></div><div class="safety-grid"><article><b class="safety-icon"><svg viewBox="0 0 32 32"><rect x="7" y="5" width="18" height="22" rx="2"/><path d="M12 5V3h8v2M11 13h10M11 18h4m3 0h3M14 9h4"/></svg></b><h3>Verified Drivers</h3><p>Multi-point background and driving record screening before first dispatch.</p></article><article><b class="safety-icon blue"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28s9-8.1 9-16a9 9 0 1 0-18 0c0 7.9 9 16 9 16Z"/><circle cx="16" cy="12" r="3.2"/><path d="M7 30h18"/></svg></b><h3>Live GPS Tracking</h3><p>Share live telemetry links with contacts so they see your precise spot in real-time.</p></article><article><b class="safety-icon red"><svg viewBox="0 0 32 32"><path d="M16 5v22M5 16h22M8 8l16 16M24 8 8 24" stroke-width="4"/></svg></b><h3>SOS Emergency Button</h3><p>Direct one-tap pipeline to emergency support and 24/7 internal dispatch.</p></article><article><b class="safety-icon"><svg viewBox="0 0 32 32"><rect x="8" y="4" width="16" height="24" rx="2"/><path d="M12 8h8M12 24h8M14 15l2-2 2 2v4h-4z"/></svg></b><h3>Masked Numbers</h3><p>In-app calling keeps your personal number private.</p></article><article><b class="safety-icon teal"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 8h24M4 16h24M4 24h24"/><path d="M11 5v6M22 13v6M15 21v6"/></svg></b><h3>2-Way Accountability</h3><p>Mutual rating ensures riders and drivers uphold high standards.</p></article><article><b class="safety-icon blue"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7.2-4.8 11.8-11 14-6.2-2.2-11-6.8-11-14V7l11-4Z"/><path d="m11 16 3.3 3.3L21.5 12"/></svg></b><h3>Accident Cover</h3><p>Added protection for every booked ride.</p></article></div></section>
+
+<section class="section pricing-section" id="pricing"><div class="center-heading"><span class="eyebrow">TRANSPARENT TARIFF</span><h2>{% if content %}{{ content.pricing_heading }}{% else %}Simple, Transparent Pricing{% endif %}</h2><p>{% if content %}{{ content.pricing_subtitle }}{% else %}No hidden fuel fees. Upfront fares guaranteed before you confirm.{% endif %}</p></div><div class="price-grid">{% for v in vehicles %}<article class="price-card"><span class="price-card-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 18.5 7.5 11a3 3 0 0 1 2.8-2h11.4a3 3 0 0 1 2.8 2l2.5 7.5v7h-3v-3H8v3H5z"/><path d="M8 18.5h16l-1.7-6H9.7zM9 20h.1M23 20h.1"/></svg></span><span class="price-category">{{ v.category }}</span><h3>{{ v.name }}</h3><div class="price">₹{{ v.base_fare }} <small>/ base fare</small></div><ul><li>₹{{ v.per_km_fare }} per additional KM</li><li>{{ v.capacity }}</li><li>Professional chauffeur</li><li>Upfront transparent fare</li></ul><a href="#booking">Select Ride <span>→</span></a></article>{% empty %}<p class="empty-state">Add vehicles and fares in CMS to publish pricing.</p>{% endfor %}</div></section>
+<section class="section testimonials-section"><div class="section-heading"><div><span class="eyebrow">VERIFIED RIDERS</span><h2>{% if content %}{{ content.testimonials_heading }}{% else %}What Our Riders Say{% endif %}</h2></div><p>{% if content %}{{ content.testimonials_subtitle }}{% else %}Thousands of daily commuters rely on NTTS Mobility for punctual meetings, late-night flights, and stress-free city hops.{% endif %}</p></div><div class="review-grid">{% for t in testimonials %}<article class="review-card"><div class="stars">{% for n in "12345" %}{% if forloop.counter <= t.rating %}★{% endif %}{% endfor %}</div><blockquote>“{{ t.quote }}”</blockquote><div class="review-person">{% if forloop.counter == 1 %}<img src="{% static 'images/testimonials/priya-sharma-reference.jpg' %}" alt="{{ t.customer_name }}">{% elif forloop.counter == 2 %}<img src="{% static 'images/testimonials/marcus-vance-reference.jpg' %}" alt="{{ t.customer_name }}">{% elif forloop.counter == 3 %}<img src="{% static 'images/testimonials/ananya-roy-reference.jpg' %}" alt="{{ t.customer_name }}">{% elif t.photo %}<img src="{{ t.photo.url }}" alt="{{ t.customer_name }}">{% else %}<span>{{ t.customer_name|slice:":1" }}</span>{% endif %}<div><b>{{ t.customer_name }} <span class="verified-tick" aria-label="Verified rider" title="Verified rider"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></b><small>{{ t.role }}</small></div></div></article>{% empty %}<p class="empty-state">Add rider testimonials in CMS.</p>{% endfor %}</div></section>
+
+<section class="download-section"><div><span class="eyebrow">● &nbsp;AVAILABLE ON IOS &amp; ANDROID</span><h2>Ready to Move?<br><em>{% if content %}{{ content.download_heading }}{% else %}Download NTTS Mobility Today{% endif %}</em></h2><p>{% if content %}{{ content.promo_text }}{% else %}Get ₹150 off your first 3 rides with promo code NTTSGO. Instant onboarding in 60 seconds.{% endif %} {% if content %}{{ content.download_subtitle }}{% endif %}</p><div class="store-buttons"><a href="#booking">▣ &nbsp; DOWNLOAD ON THE <b>App Store</b></a><a href="#booking">▣ &nbsp; GET IT ON <b>Google Play</b></a></div></div><div class="qr-panel"><div class="qr-art">▦<br>▣</div><b>Scan to Download</b><small>Instant Camera Link</small></div></section>
+
+{% for block in builder_sections %}<section class="builder-block builder-{{ block.layout }}" style="background:{{ block.background_color }};color:{{ block.text_color }};border-radius:{{ site_theme.border_radius|default:16 }}px"><div class="builder-block-inner">{% if block.eyebrow %}<span class="eyebrow" style="color:{{ block.accent_color }}">{{ block.eyebrow }}</span>{% endif %}<h2>{{ block.title }}</h2><div class="builder-block-body">{{ block.body|linebreaksbr }}</div>{% if block.image %}<img src="{{ block.image.url }}" alt="{{ block.title }}">{% endif %}{% if block.button_label and block.button_url %}<a class="btn-green" href="{{ block.button_url }}" style="background:{{ block.accent_color }}">{{ block.button_label }}</a>{% endif %}</div></section>{% endfor %}
+
+{% for block in cms_sections %}<section class="section extra-cms-section"><div class="center-heading">{% if block.eyebrow %}<span class="eyebrow">{{ block.eyebrow }}</span>{% endif %}<h2>{{ block.title }}</h2><p>{{ block.body|linebreaksbr }}</p>{% if block.image %}<img src="{{ block.image.url }}" alt="{{ block.title }}">{% endif %}{% if block.button_label and block.button_url %}<a class="btn-green" href="{{ block.button_url }}">{{ block.button_label }}</a>{% endif %}</div></section>{% endfor %}
+
+
+
+<div class="booking-modal" id="bookingModal" aria-hidden="true">
+
+  <div class="booking-modal-backdrop" data-close-booking></div>
+
+  <section class="booking-modal-panel" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+
+    <button class="booking-modal-close" type="button" aria-label="Close booking" data-close-booking>×</button>
+
+    <div class="modal-step-label">NTTS MOBILITY · INSTANT BOOKING</div>
+
+    <h2 id="bookingModalTitle">Book Your Ride</h2>
+
+    <p class="modal-intro">Enter your trip details and choose the ride that suits you.</p>
+
+    <div class="modal-progress"><span class="active">01&nbsp; Trip details</span><i></i><span>02&nbsp; Choose vehicle</span></div>
+
+    <div class="modal-form-slot"></div>
+
+  </section>
+
+</div>
+
+<div class="booking-success" id="bookingSuccess" aria-hidden="true">
+
+  <div class="booking-success-backdrop" data-close-success></div>
+
+  <section class="booking-success-panel" role="dialog" aria-modal="true" aria-labelledby="bookingSuccessTitle">
+
+    <div class="success-check" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m13 25 7 7 16-17" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <h2 id="bookingSuccessTitle">Request Sent!</h2>
+
+    <p>Our new team member will<br>contact you shortly.</p>
+
+    <div class="success-reference" id="successReference"></div>
+
+    <a id="trackBookingLink" class="success-whatsapp" href="/customer/login/">View My Rides</a>
+
+    <a id="whatsappOwnerLink" class="success-whatsapp" href="#" target="_blank" rel="noopener" hidden>Chat with owner on WhatsApp</a>
+
+    <button type="button" class="success-done" data-close-success>Done</button>
+
+    <small>ⓘ &nbsp; Your booking request has been received</small>
+
+  </section>
+
+</div>
+
+</main><footer class="site-footer"><div class="footer-main"><div class="footer-brand"><a class="logo" href="#home" aria-label="NTTS Mobility home"><img src="{% static 'images/ntts-logo-figma.png' %}" alt="NTTS Mobility" class="brand-logo"></a><p>{% if content %}{{ content.footer_text }}{% else %}Redefining mobility for the modern city. Experience seamless, safe, and sustainable transportation at the tap of a button.{% endif %}</p><div class="socials">
+
+<a href="#" aria-label="Website"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9S14.5 18.5 12 21M12 3C9.5 5.5 8.5 8.5 8.5 12s1 6.5 3.5 9"/></svg></a>
+
+<a href="#" aria-label="Share"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.3 10.8 7.4-4.5M8.3 13.2l7.4 4.5"/></svg></a>
+
+<a href="#" aria-label="Favorites"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5-8.8 11-8.8 11s-8.8-6-8.8-11A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"/></svg></a>
+
+</div></div><div><b>COMPANY</b><a href="#home">About Us</a><a href="#fleet">Fleet</a><a href="#process">How it Works</a></div><div><b>SUPPORT</b><a href="#safety">Help Center</a><a href="#safety">Safety Protocols</a><a href="/my-rides/">My Rides</a><a href="#booking">Contact Concierge</a></div><div><b>LEGAL</b><a href="#">Privacy Policy</a><a href="#">Terms of Transit</a><a href="/cms/">CMS Login</a></div></div><div class="footer-bottom">© {% now "Y" %} NTTS Mobility Technologies. All rights reserved.</div></footer>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const rideWindow = document.getElementById("ride_time");
+  const customBox = document.getElementById("customTimeBox");
+  const customInput = document.getElementById("custom_time");
+  if (!rideWindow || !customBox || !customInput) return;
+  function updateCustomTimeField() {
+    const isCustom = rideWindow.value === "custom";
+    customBox.hidden = !isCustom;
+    customInput.required = isCustom;
+    if (!isCustom) customInput.value = "";
+  }
+  rideWindow.addEventListener("change", updateCustomTimeField);
+  updateCustomTimeField();
+});
+</script>
+
+<script src="{% static 'js/site.js' %}"></script></body></html>

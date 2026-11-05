@@ -1,0 +1,22 @@
+NTTS MOBILITY - BOOKING + WHATSAPP + VERIFIED TESTIMONIAL UPDATE
+=================================================================
+
+- Booking requests are saved in the Django Booking table before the success popup.
+- The Figma-style Request Sent popup shows the booking reference.
+- The popup includes a WhatsApp click-to-chat link with the booking details prefilled.
+- The customer must tap Send in WhatsApp; messages are not silently sent by the website.
+- The CMS dashboard lists saved bookings under Ride Bookings; admins can update status.
+- Testimonials display the green verified-check treatment and reference portrait thumbnails.
+- Original vehicle photos from the previous revision are retained.
+
+OWNER WHATSAPP SETUP
+--------------------
+Copy your existing backend/.env into this backend folder, then add:
+WHATSAPP_OWNER_NUMBER=91XXXXXXXXXX
+
+Replace XXXXXXXXXX with the owner's real 10-digit WhatsApp number. Use country code
+and digits only; do not include +, spaces or hyphens.
+
+No database model changes or new migrations are required for this update.
+After extracting, run the server and test one booking. Confirm it appears in CMS >
+Ride Bookings, then click Chat with owner on WhatsApp in the success popup.

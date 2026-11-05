@@ -1,0 +1,5 @@
+Testimonial profile photo fix
+- Replaced the incorrect cropped placeholder images with portrait crops from the supplied Figma reference screenshot.
+- Added an image onerror fallback so a missing/broken CMS-uploaded photo falls back to the matching local reference portrait.
+- Enforced circular 56x56 cover-cropped portraits.
+No database migration required.
