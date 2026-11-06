@@ -75,48 +75,120 @@ if(form){form.addEventListener('submit',async e=>{e.preventDefault();const messa
 // Figma-style booking confirmation overlay.
 (() => {const modal=document.getElementById('bookingSuccess');if(!modal)return;const close=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-lock')};modal.querySelectorAll('[data-close-success]').forEach(el=>el.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close()});})();
 
-// Active navigation: highlight the section currently visible on screen.
+
+// Single source of truth for navbar active state: click, direct hash load and manual scroll.
 (() => {
-  const nav = document.getElementById("navLinks");
+  const nav = document.getElementById('navLinks');
   if (!nav) return;
-
   const links = [...nav.querySelectorAll('a[href^="#"]')];
-  const sections = links
-    .map(link => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-
-  const setActive = (id) => {
-    links.forEach(link => {
-      const active = link.getAttribute("href") === `#${id}`;
-      link.classList.toggle("active", active);
-
-      if (active) {
-        link.setAttribute("aria-current", "location");
-      } else {
-        link.removeAttribute("aria-current");
-      }
-    });
+  const pairs = links.map(link => ({link, section: document.querySelector(link.getAttribute('href'))})).filter(x => x.section);
+  if (!pairs.length) return;
+  const activate = link => links.forEach(a => {
+    const active = a === link;
+    a.classList.toggle('active', active);
+    if (active) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
+  const update = () => {
+    const header = document.querySelector('.site-nav');
+    const marker = (header?.getBoundingClientRect().bottom || 0) + 28;
+    let current = pairs[0];
+    for (const item of pairs) {
+      if (item.section.getBoundingClientRect().top <= marker) current = item;
+    }
+    activate(current.link);
   };
-
-  const observer = new IntersectionObserver(entries => {
-    const visible = entries
-      .filter(entry => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-    if (visible.length) setActive(visible[0].target.id);
-  }, {
-    rootMargin: "-20% 0px -65% 0px",
-    threshold: [0, 0.1, 0.25, 0.5]
+  links.forEach(link => link.addEventListener('click', () => {
+    activate(link);
+    nav.classList.remove('open');
+  }));
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update, {passive:true});
+  window.addEventListener('hashchange', () => {
+    const target = links.find(a => a.getAttribute('href') === location.hash);
+    if (target) activate(target);
+    requestAnimationFrame(update);
   });
+  window.addEventListener('load', update);
+  if (location.hash) {
+    const target = links.find(a => a.getAttribute('href') === location.hash);
+    if (target) activate(target);
+  }
+  requestAnimationFrame(update);
+})();
 
-  sections.forEach(section => observer.observe(section));
-
-  links.forEach(link => {
-    link.addEventListener("click", () => {
-      const id = link.getAttribute("href").slice(1);
-      setActive(id);
+// Only the pricing card selected by the visitor receives the active highlight.
+(() => {
+  const cards = [...document.querySelectorAll('.price-card')];
+  cards.forEach(card => {
+    const action = card.querySelector('a');
+    if (!action) return;
+    action.addEventListener('click', () => {
+      cards.forEach(item => item.classList.toggle('is-selected', item === card));
     });
   });
+})();
 
-  setActive("home");
+// Reveal important cards as they enter the viewport.
+(() => {
+  if (!('IntersectionObserver' in window)) return;
+  const items = document.querySelectorAll('.price-card,.step-card,.review-card,.safety-grid article,.dispatch-strip');
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+  }), {threshold:.12});
+  items.forEach(item => observer.observe(item));
+})();
+
+
+// Pricing cards: selected card only is persistently highlighted; hover is not selection.
+(() => {
+ const cards=[...document.querySelectorAll('.price-card')];
+ cards.forEach(card=>{const action=card.querySelector('a');if(!action)return;action.addEventListener('click',()=>{cards.forEach(c=>c.classList.toggle('is-selected',c===card));});});
+})();
+
+// Premium scroll reveals and staggered entrance for the main content blocks.
+(() => {
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  const targets = document.querySelectorAll(
+    '.hero-content,.booking-card,.fleet-motion,.stats-row article,.section-heading,.vehicle-card,.step-card,.price-card,.safety-grid article,.review-card,.download-section,.builder-block'
+  );
+  if (!targets.length) return;
+  document.documentElement.classList.add('ntts-motion-ready');
+  targets.forEach((el, index) => {
+    el.classList.add('ntts-reveal');
+    const sibling = el.parentElement ? [...el.parentElement.children].filter(child => child.matches('.vehicle-card,.step-card,.price-card,.review-card,.safety-grid article,.stats-row article')) : [];
+    const order = sibling.indexOf(el);
+    if (order >= 0) el.classList.add(`ntts-delay-${Math.min(order + 1, 3)}`);
+  });
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(el => el.classList.add('ntts-in'));
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('ntts-in');
+      observer.unobserve(entry.target);
+    });
+  }, {threshold:.10, rootMargin:'0px 0px -35px 0px'});
+  targets.forEach(el => observer.observe(el));
+})();
+
+// Add a restrained pointer tilt to desktop cards only; disabled on touch devices.
+(() => {
+  if (!window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  document.querySelectorAll('.vehicle-card,.price-card,.review-card').forEach(card => {
+    card.addEventListener('pointermove', event => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      card.style.setProperty('--ntts-pointer-x', `${(x * 3).toFixed(2)}deg`);
+      card.style.setProperty('--ntts-pointer-y', `${(-y * 2).toFixed(2)}deg`);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('--ntts-pointer-x');
+      card.style.removeProperty('--ntts-pointer-y');
+    });
+  });
 })();

@@ -181,3 +181,71 @@ class Driver(models.Model):
 
     def __str__(self):
         return f'{self.full_name} · {self.phone}'
+
+
+class WebsiteBranding(models.Model):
+    """Central identity and navigation labels used by the public website."""
+    brand_name = models.CharField(max_length=100, default='NTTS MOBILITY')
+    browser_title = models.CharField(max_length=160, default='NTTS MOBILITY | Your Ride, Your Way')
+    tagline = models.CharField(max_length=200, blank=True, default='')
+    logo = models.ImageField(upload_to='branding/', blank=True, null=True, help_text='Main logo used in the website header and footer')
+    favicon = models.ImageField(upload_to='branding/', blank=True, null=True, help_text='Browser tab icon')
+    header_home_label = models.CharField(max_length=50, default='Home')
+    header_fleet_label = models.CharField(max_length=50, default='Fleet')
+    header_process_label = models.CharField(max_length=50, default='How It Works')
+    header_safety_label = models.CharField(max_length=50, default='Safety')
+    header_pricing_label = models.CharField(max_length=50, default='Pricing')
+    header_booking_label = models.CharField(max_length=60, default='Book a Ride')
+    footer_company_name = models.CharField(max_length=120, default='NTTS Mobility Technologies')
+    footer_company_heading = models.CharField(max_length=60, default='COMPANY')
+    footer_support_heading = models.CharField(max_length=60, default='SUPPORT')
+    footer_legal_heading = models.CharField(max_length=60, default='LEGAL')
+    footer_about_label = models.CharField(max_length=60, default='About Us')
+    footer_help_label = models.CharField(max_length=60, default='Help Center')
+    footer_contact_label = models.CharField(max_length=60, default='Contact Concierge')
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Website branding & names'
+        verbose_name_plural = 'Website branding & names'
+
+    def __str__(self):
+        return self.brand_name
+
+
+class PageContentItem(models.Model):
+    """Editable cards/steps that belong to an individual public website page."""
+    PAGE_CHOICES = [('home','Home Page'),('fleet','Fleet Page'),('process','How It Works Page'),('safety','Safety Page'),('pricing','Pricing Page'),('booking','Booking Page'),('testimonials','Testimonials Page'),('download','App Download Page'),('footer','Footer Page')]
+    page = models.CharField(max_length=24, choices=PAGE_CHOICES, db_index=True)
+    title = models.CharField(max_length=180)
+    eyebrow = models.CharField(max_length=120, blank=True)
+    body = models.TextField(blank=True)
+    image = models.ImageField(upload_to='page-content/', blank=True, null=True)
+    icon = models.CharField(max_length=80, blank=True, help_text='Optional icon name or short symbol')
+    button_label = models.CharField(max_length=80, blank=True)
+    button_url = models.CharField(max_length=300, blank=True)
+    is_visible = models.BooleanField(default=True)
+    sort_order = models.PositiveIntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ['page', 'sort_order', 'id']
+        verbose_name = 'Page content item'
+        verbose_name_plural = 'Page content items'
+    def __str__(self):
+        return f'{self.get_page_display()} — {self.title}'
+
+# Proxy models create separate page-wise menus in the standard Django Admin.
+class HomePageContent(SiteContent):
+    class Meta: proxy = True; verbose_name = 'Home page'; verbose_name_plural = '01 · Home page'
+class FleetPageContent(SiteContent):
+    class Meta: proxy = True; verbose_name = 'Fleet page'; verbose_name_plural = '02 · Fleet page'
+class ProcessPageContent(SiteContent):
+    class Meta: proxy = True; verbose_name = 'How It Works page'; verbose_name_plural = '03 · How It Works page'
+class SafetyPageContent(SiteContent):
+    class Meta: proxy = True; verbose_name = 'Safety page'; verbose_name_plural = '04 · Safety page'
+class PricingPageContent(SiteContent):
+    class Meta: proxy = True; verbose_name = 'Pricing page'; verbose_name_plural = '05 · Pricing page'
+class DownloadPageContent(SiteContent):
+    class Meta: proxy = True; verbose_name = 'App download page'; verbose_name_plural = '06 · App download page'
+class FooterPageContent(SiteContent):
+    class Meta: proxy = True; verbose_name = 'Footer page'; verbose_name_plural = '07 · Footer page'

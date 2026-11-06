@@ -1,0 +1,24 @@
+NTTS MOBILITY — SINGLE DJANGO ADMIN SETUP
+
+இந்த package-ல் /admin/ Django Admin URL configure செய்யப்பட்டுள்ளது. Website design/frontend files-மும் இந்த package-ல் உள்ளன.
+
+LOCAL SETUP (backend folder-ல்):
+1) Existing virtual environment activate செய்யவும்.
+2) python manage.py migrate
+3) python manage.py createsuperuser  (ஏற்கனவே superuser இருந்தால் மீண்டும் தேவையில்லை)
+4) python manage.py runserver
+5) Open http://127.0.0.1:8000/admin/
+
+ADMIN-ல் கிடைக்கும் sections:
+- Site contents: homepage headings, hero text/image, promotion, footer, fleet/pricing/how-it-works/safety/testimonial headings, stats.
+- Website sections / Builder sections: content blocks, images, button labels/URLs, visibility, order and colors.
+- Site themes: global colors, fonts and border radius.
+- Vehicles: car names, categories, images, base/per-km fares, carousel visibility and order.
+- Testimonials and media library.
+- Bookings, drivers and customer profiles.
+
+முக்கியம்:
+- Admin loginக்கு Django superuser account பயன்படுத்தவும்.
+- Existing database-ஐ delete/replace செய்ய வேண்டாம். migrate மட்டும் run செய்யவும்.
+- Website-ல் எந்த field-ஐ edit செய்தாலும் அது public page-ல் reflect ஆகும் என்பது அந்த field template/context-ல் பயன்படுத்தப்பட்டுள்ளதைக் கொண்டே அமையும். Builder content fields public template-ல் render ஆகும் existing implementation-ஐ மட்டும் நிர்வகிக்கும்; code-defined design/animations-ஐ admin-ல் மாற்ற முடியாது.
+- Production/Render-ல் deploy செய்யும்போது updated files-ஐ GitHub-க்கு commit/push செய்து Render redeploy செய்யவும்; Render shell-ல் python manage.py migrate ஓட்டவும்.

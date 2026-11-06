@@ -181,3 +181,205 @@ body{font-size:16px;line-height:1.65}
 .brand-logo{max-width:190px;max-height:48px;object-fit:contain}
 button,input,select,textarea{font-size:15px}
 @media(max-width:900px){.site-nav{padding:0 20px}#navLinks{gap:14px}}
+
+
+/* NTTS premium readability + interaction polish (Nov 06) */
+.fleet-copy h3,
+.fleet-slide .fleet-copy h3,
+.fleet-slide h3 {
+  color:#fff !important;
+  font-weight:700;
+  text-shadow:0 2px 12px rgba(0,0,0,.22);
+}
+.fleet-copy p,.fleet-slide .fleet-copy p {color:#d7eee6 !important;}
+.fleet-copy .fleet-specs span {color:#b9d8cd;}
+.fleet-copy .fleet-specs strong {color:#f7fffb;}
+
+/* Pricing and vehicle actions stay visible before hover; hover is an enhancement only. */
+.price-card>a,
+.price-card.featured>a,
+.vehicle-cta {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  min-height:48px;
+  padding:12px 18px;
+  border:1px solid var(--green) !important;
+  border-radius:11px;
+  background:var(--green) !important;
+  color:#fff !important;
+  font-weight:700;
+  box-shadow:0 7px 16px rgba(16,132,79,.16);
+  opacity:1 !important;
+  visibility:visible !important;
+}
+.price-card>a span,.vehicle-cta b {position:static; margin-left:auto; color:#fff !important;}
+.price-card>a:hover,.vehicle-cta:hover {
+  background:#075f3a !important;
+  border-color:#075f3a !important;
+  color:#fff !important;
+  transform:translateY(-3px);
+  box-shadow:0 13px 25px rgba(16,132,79,.28);
+}
+.price-card {overflow:hidden;}
+.price-card h3 {color:#18212b !important;}
+.price-card .price {color:#48576b;}
+.price-card .price-category {color:#078b55;font-weight:700;}
+
+/* Scroll-aware active navigation underline */
+#navLinks a {transition:color .22s ease;}
+#navLinks a.active {color:var(--green) !important;}
+#navLinks a.active:after {left:0 !important;right:0 !important;}
+#navLinks a:focus-visible,.fleet-tabs button:focus-visible,
+.price-card>a:focus-visible,.vehicle-cta:focus-visible {
+  outline:3px solid #72e0b1;outline-offset:4px;
+}
+
+/* More consistent premium card depth and subtle motion across sections. */
+.vehicle-card,.price-card,.step-card,.review-card,.safety-grid article,
+.dispatch-strip,.download-section,.builder-block {
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s ease,border-color .32s ease;
+}
+.vehicle-card:hover,.price-card:hover,.step-card:hover,.review-card:hover,
+.safety-grid article:hover {box-shadow:0 18px 38px rgba(20,48,37,.12);}
+.vehicle-card,.price-card,.step-card,.review-card {will-change:transform;}
+.fleet-tab {color:#f3fff9;}
+.fleet-tab:hover,.fleet-tab.selected {color:#fff !important;}
+@media(max-width:760px){
+  .fleet-copy h3,.fleet-slide .fleet-copy h3 {font-size:27px;color:#fff !important;}
+  .price-card>a,.vehicle-cta {min-height:48px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .vehicle-card,.price-card,.step-card,.review-card,.safety-grid article {transition:none!important;}
+}
+.premium-reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.8,.2,1);}
+.premium-reveal.visible{opacity:1;transform:translateY(0);}
+
+/* Final visual correction: always-readable fleet names and visible green actions. */
+.fleet-motion .fleet-slide .fleet-copy h3,
+.fleet-motion .fleet-slide h3,
+.fleet-motion .fleet-showcase h3 {
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  text-shadow:0 2px 14px rgba(0,0,0,.28);
+  opacity:1 !important;
+}
+.fleet-motion .fleet-slide .fleet-copy {color:#f4fff9;}
+.fleet-motion .fleet-slide .fleet-copy p {color:#d8eee5 !important;}
+.price-card > a,
+.price-card.featured > a,
+.vehicle-cta {
+  display:flex !important;
+  min-height:48px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:#10844f !important;
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  border:1px solid #10844f !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  box-shadow:0 8px 18px rgba(16,132,79,.2) !important;
+}
+.price-card > a:hover,.vehicle-cta:hover {
+  background:#086a40 !important;
+  border-color:#086a40 !important;
+  transform:translateY(-3px);
+}
+.price-card.is-selected {
+  border-color:#10844f !important;
+  box-shadow:0 0 0 2px rgba(16,132,79,.15),0 18px 38px rgba(20,48,37,.13) !important;
+  transform:translateY(-5px);
+}
+.price-card.is-selected > a {background:#075f3a !important;border-color:#075f3a !important;}
+.price-card {transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;}
+
+
+/* Nov 06 final corrections requested from screenshots */
+/* Vehicle and pricing actions are calm by default; green is the hover/focus affordance. */
+.vehicle-cta,
+.price-card > a,
+.price-card.featured > a {
+  background:#ffffff !important;
+  color:#18212b !important;
+  -webkit-text-fill-color:#18212b !important;
+  border:1px solid #d7e2e9 !important;
+  box-shadow:0 5px 14px rgba(20,48,37,.06) !important;
+  font-weight:700;
+  transition:background .24s ease,color .24s ease,border-color .24s ease,transform .24s ease,box-shadow .24s ease;
+}
+.vehicle-cta b,.price-card > a span {color:inherit !important;}
+.vehicle-cta:hover,
+.vehicle-cta:focus-visible,
+.price-card > a:hover,
+.price-card > a:focus-visible {
+  background:#10844f !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  border-color:#10844f !important;
+  box-shadow:0 12px 24px rgba(16,132,79,.23) !important;
+  transform:translateY(-3px);
+}
+.vehicle-cta:hover b,.price-card > a:hover span,
+.vehicle-cta:focus-visible b,.price-card > a:focus-visible span {color:#fff !important;}
+.vehicle-card {border:1px solid #dce7ec; border-radius:22px; overflow:hidden; box-shadow:0 8px 22px rgba(18,42,35,.055);}
+.vehicle-card:hover {border-color:#7bd6ad; box-shadow:0 18px 38px rgba(18,42,35,.13);}
+.vehicle-info {padding:22px 23px 24px;}
+.vehicle-cta {margin-top:18px; min-height:54px !important; border-radius:13px !important; letter-spacing:.1px;}
+.fleet-motion {border:1px solid rgba(255,255,255,.24); box-shadow:0 22px 48px rgba(13,66,48,.15);}
+.fleet-showcase {border:1px solid rgba(102,225,183,.2); box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 34px rgba(0,0,0,.12);}
+.fleet-slide .fleet-copy h3 {color:#fff !important; -webkit-text-fill-color:#fff !important;}
+.fleet-slide .showcase-car {border-radius:18px; overflow:hidden;}
+.fleet-slide .showcase-car img {border-radius:14px;}
+.fleet-tabs button {border:1px solid rgba(255,255,255,.25); box-shadow:0 5px 14px rgba(0,0,0,.08);}
+#navLinks a.active {color:#078b55 !important;}
+#navLinks a.active:after {transform:scaleX(1); opacity:1;}
+#navLinks a:not(.active):after {transform:scaleX(0); opacity:0;}
+.testimonials-section {background:#f5f8fa;}
+.review-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch;}
+.review-card {background:#fff;border:1px solid #e0e8ef;border-radius:24px;box-shadow:0 4px 12px rgba(20,48,37,.035);padding:28px 30px;min-height:280px;}
+.review-card .stars {color:#f59a00;font-size:23px;letter-spacing:2px;margin-bottom:14px;}
+.review-card blockquote {color:#26313c;font-size:14px;line-height:1.7;margin:0 0 22px;}
+.review-person {display:flex;align-items:center;gap:13px;border-top:1px solid #edf1f4;padding-top:18px;margin-top:auto;}
+.review-person img {width:48px;height:48px;object-fit:cover;border-radius:50%;border:2px solid #b8ead3;}
+.review-person b {display:flex;align-items:center;gap:7px;color:#1b2630;font-size:14px;}
+.review-person small {display:block;color:#66736e;font-size:12px;margin-top:3px;}
+.verified-tick {display:inline-flex;width:18px;height:18px;align-items:center;justify-content:center;background:#0b9660;color:#fff;border-radius:50%;}
+.verified-tick svg {width:12px;height:12px;}
+@media(max-width:900px){.review-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:640px){.review-grid{grid-template-columns:1fr;}.review-card{padding:24px;}}
+
+/* NTTS premium motion layer – subtle, polished and performance-friendly */
+:root{--motion-ease:cubic-bezier(.22,.75,.25,1)}
+@keyframes nttsFadeUp{from{opacity:0;transform:translate3d(0,26px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes nttsSoftGlow{0%,100%{box-shadow:0 10px 28px rgba(16,132,79,.10)}50%{box-shadow:0 16px 38px rgba(16,132,79,.19)}}
+@keyframes nttsShimmer{0%{background-position:120% 0}100%{background-position:-120% 0}}
+@keyframes nttsFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+/* Scroll-in animation is activated by the observer in site.js. */
+.ntts-motion-ready .ntts-reveal{opacity:0;transform:translate3d(0,24px,0);transition:opacity .72s var(--motion-ease),transform .72s var(--motion-ease)}
+.ntts-motion-ready .ntts-reveal.ntts-in{opacity:1;transform:translate3d(0,0,0)}
+.ntts-reveal.ntts-delay-1{transition-delay:.08s}.ntts-reveal.ntts-delay-2{transition-delay:.16s}.ntts-reveal.ntts-delay-3{transition-delay:.24s}
+/* Rich card response without excessive movement. */
+.vehicle-card,.price-card,.step-card,.review-card,.safety-grid article,.stats-row article,.builder-block{transform:translateZ(0);transition:transform .38s var(--motion-ease),box-shadow .38s var(--motion-ease),border-color .3s ease}
+.vehicle-card:hover,.price-card:hover,.step-card:hover,.review-card:hover,.safety-grid article:hover,.stats-row article:hover{transform:translateY(-7px);box-shadow:0 20px 44px rgba(17,48,37,.13)}
+.review-card:hover,.price-card:hover{border-color:#8bdcba}
+.vehicle-image img,.review-person img,.showcase-car img{transition:transform .65s var(--motion-ease),filter .65s ease}
+.review-card:hover .review-person img{transform:scale(1.08);box-shadow:0 5px 15px rgba(16,132,79,.18)}
+/* Buttons get a soft highlight sweep on hover/focus. */
+.nav-book,.submit-book,.vehicle-cta,.price-card>a,.btn-green,.success-done,.fleet-arrow{position:relative;isolation:isolate;overflow:hidden;transition:transform .28s var(--motion-ease),box-shadow .28s ease,background .25s ease,color .25s ease,border-color .25s ease}
+.nav-book:before,.submit-book:before,.vehicle-cta:before,.price-card>a:before,.btn-green:before,.success-done:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.28) 48%,transparent 72%);background-size:220% 100%;background-position:120% 0;transition:background-position .65s ease}
+.nav-book:hover:before,.submit-book:hover:before,.vehicle-cta:hover:before,.price-card>a:hover:before,.btn-green:hover:before,.success-done:hover:before{background-position:-120% 0}
+.nav-book:active,.submit-book:active,.vehicle-cta:active,.price-card>a:active,.btn-green:active{transform:translateY(0) scale(.985)}
+/* Images and showcase receive gentle depth. */
+.fleet-motion{position:relative;isolation:isolate}
+.fleet-motion:before{content:"";position:absolute;inset:-40% auto -40% -35%;width:32%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.075),transparent);transform:skewX(-18deg);animation:nttsShimmer 9s ease-in-out infinite;pointer-events:none;z-index:-1}
+.fleet-showcase{box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 38px rgba(0,0,0,.15)}
+.fleet-slide.active .showcase-car img{filter:drop-shadow(0 22px 18px rgba(0,0,0,.22))}
+.site-nav.scrolled{box-shadow:0 12px 34px rgba(16,35,28,.12)}
+.booking-card{transition:transform .4s var(--motion-ease),box-shadow .4s ease}
+.booking-card:focus-within{box-shadow:0 22px 58px rgba(16,80,55,.2)}
+input,select,textarea{transition:border-color .22s ease,box-shadow .22s ease,background .22s ease}
+:focus-visible{outline:3px solid rgba(16,132,79,.32);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.ntts-motion-ready .ntts-reveal{opacity:1!important;transform:none!important;transition:none!important}.fleet-motion:before{animation:none!important}*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(hover:hover) and (pointer:fine){.vehicle-card:hover,.price-card:hover,.review-card:hover{transform:perspective(900px) rotateX(var(--ntts-pointer-y,0deg)) rotateY(var(--ntts-pointer-x,0deg)) translateY(-7px)}}

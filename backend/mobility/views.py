@@ -1,18 +1,16 @@
-﻿import os
+import os
 import json
 from urllib.parse import quote
 from django.conf import settings
 from django import forms
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.dateparse import parse_date, parse_time
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.views.decorators.http import require_http_methods
@@ -20,7 +18,7 @@ import requests, secrets
 import re
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
-from .models import SiteContent, WebsiteSection, Vehicle, Testimonial, Booking, MediaAsset, BuilderSection, SiteTheme, CustomerProfile, Driver
+from .models import SiteContent, WebsiteSection, Vehicle, Testimonial, Booking, MediaAsset, BuilderSection, SiteTheme, CustomerProfile, Driver, WebsiteBranding, PageContentItem
 
 CMS_MODELS = {
     'site-content': (SiteContent, 'Website Identity'),
@@ -237,40 +235,17 @@ def customer_login(request):
                     "This code expires in 5 minutes. Do not share it with anyone."
                 )
                 try:
-                    response = requests.post(
-                        "https://api.brevo.com/v3/smtp/email",
-                        headers={
-                            "accept": "application/json",
-                            "api-key": settings.BREVO_API_KEY,
-                            "content-type": "application/json",
-                        },
-                        json={
-                            "sender": {
-                                "email": settings.DEFAULT_FROM_EMAIL,
-                                "name": "NTTS Mobility",
-                            },
-                            "to": [{"email": email}],
-                            "subject": subject,
-                            "textContent": body,
-                        },
-                        timeout=15,
-                    )
-
-                    if response.status_code not in (200, 201, 202):
-                        raise RuntimeError(
-                            f"Brevo API error: {response.status_code} - {response.text[:300]}"
-                        )
-
+                    sent = send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
+                    if sent != 1:
+                        raise RuntimeError("Email provider did not accept the message.")
                     cache.set(_customer_otp_cache_key(email), {"otp": otp, "phone": phone}, timeout=300)
                     cache.set(_customer_otp_cooldown_key(email), True, timeout=60)
                     request.session["customer_otp_email"] = email
                     request.session["customer_otp_phone"] = phone
                     messages.success(request, "OTP sent to your email address. Please check your inbox and spam folder.")
                     return render(request, "customer_login.html", {"otp_sent": True, "email": email, "phone": phone})
-
-                except Exception as exc:
-                    print(f"Brevo OTP email error: {exc}")
-                    error = "Unable to send OTP. Please check your verified sender email and Brevo API configuration."
+                except Exception:
+                    error = "Unable to send OTP. Check your Brevo SMTP settings and verified sender email."
         elif action == "verify_otp":
             entered_otp = request.POST.get("otp", "").strip()
             saved = cache.get(_customer_otp_cache_key(email))
@@ -344,7 +319,10 @@ def home(request):
     content = SiteContent.objects.filter(key='home').first()
     vehicles = Vehicle.objects.filter(is_active=True)
     testimonials = Testimonial.objects.filter(is_active=True)
-    return render(request, 'home.html', {'content': content, 'vehicles': vehicles, 'testimonials': testimonials, 'cms_sections': WebsiteSection.objects.filter(is_visible=True), 'showcase_vehicles': Vehicle.objects.filter(is_active=True, showcase_enabled=True), 'builder_sections': BuilderSection.objects.filter(is_visible=True), 'site_theme': SiteTheme.objects.first()})
+    branding = WebsiteBranding.objects.first()
+    if branding is None:
+        branding = WebsiteBranding.objects.create()
+    return render(request, 'home.html', {'branding': branding, 'content': content, 'vehicles': vehicles, 'testimonials': testimonials, 'cms_sections': WebsiteSection.objects.filter(is_visible=True), 'showcase_vehicles': Vehicle.objects.filter(is_active=True, showcase_enabled=True), 'builder_sections': BuilderSection.objects.filter(is_visible=True), 'site_theme': SiteTheme.objects.first(), 'process_items': PageContentItem.objects.filter(page='process', is_visible=True), 'safety_items': PageContentItem.objects.filter(page='safety', is_visible=True)})
 
 @require_POST
 @csrf_protect
@@ -444,60 +422,3 @@ def cms_theme(request):
     if request.method == 'POST' and form.is_valid():
         form.save(); messages.success(request, 'Global website design updated.'); return redirect('cms_theme')
     return render(request, 'cms_form.html', {'form': form, 'title': 'Global Website Design', 'model_key': 'theme', 'is_edit': True})
-
-@login_required(login_url='/cms/login/')
-@user_passes_test(staff_check, login_url='/cms/login/')
-def cms_profile(request):
-    user = request.user
-
-    if request.method == 'POST':
-        action = request.POST.get('action', '')
-
-        if not user.check_password(request.POST.get('current_password', '')):
-            messages.error(request, 'Current password is incorrect.')
-
-        elif action == 'profile':
-            first_name = request.POST.get('first_name', '').strip()
-            last_name = request.POST.get('last_name', '').strip()
-            email = request.POST.get('email', '').strip()
-            username = request.POST.get('username', '').strip()
-
-            if not all([first_name, email, username]):
-                messages.error(request, 'Name, email and username are required.')
-            elif User.objects.filter(username__iexact=username).exclude(pk=user.pk).exists():
-                messages.error(request, 'This username is already taken.')
-            elif User.objects.filter(email__iexact=email).exclude(pk=user.pk).exists():
-                messages.error(request, 'This email is already in use.')
-            else:
-                user.first_name = first_name
-                user.last_name = last_name
-                user.email = email
-                user.username = username
-                user.save()
-                messages.success(request, 'Admin profile updated successfully.')
-                return redirect('cms_profile')
-
-        elif action == 'password':
-            new_password = request.POST.get('new_password', '')
-            confirm_password = request.POST.get('confirm_password', '')
-
-            if not new_password:
-                messages.error(request, 'Enter a new password.')
-            elif new_password != confirm_password:
-                messages.error(request, 'New password and confirmation do not match.')
-            else:
-                try:
-                    validate_password(new_password, user=user)
-                    user.set_password(new_password)
-                    user.save()
-                    update_session_auth_hash(request, user)
-                    messages.success(request, 'Password changed successfully.')
-                    return redirect('cms_profile')
-                except ValidationError as error:
-                    for item in error.messages:
-                        messages.error(request, item)
-
-        else:
-            messages.error(request, 'Invalid settings request.')
-
-    return render(request, 'cms_profile.html', {'profile_user': user})

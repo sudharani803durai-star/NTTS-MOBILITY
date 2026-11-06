@@ -1,13 +1,10 @@
-@"
+venv/
+__pycache__/
+*.pyc
 .env
-backend/.env
-backend/venv/
-backend/__pycache__/
-backend/**/__pycache__/
-backend/*.pyc
-backend/db.sqlite3
-backend/media/
-backend/staticfiles/
-backend/firebase-service-account.json
-backend/ntts-mobility-firebase-adminsdk-*.json
-"@ | Set-Content .gitignore
+db.sqlite3
+media/
+staticfiles/
+
+# Firebase Admin credentials
+firebase-service-account.json

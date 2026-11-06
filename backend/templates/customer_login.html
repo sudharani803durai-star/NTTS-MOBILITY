@@ -5,30 +5,7 @@
 .auth-wrap{min-height:80vh;display:grid;place-items:center;padding:48px 18px;background:#f5f8f6}.auth-card{width:min(100%,480px);background:#fff;padding:38px;border:1px solid #e1e9e4;border-radius:22px;box-shadow:0 18px 50px #17291e12}.auth-card h1{font:700 32px/1.2 'Space Grotesk',Arial,sans-serif;margin:0 0 10px;color:#17251e}.auth-card p{font-size:16px;line-height:1.7;color:#56645c}.auth-card label{display:block;font-weight:600;font-size:15px;margin:20px 0 8px}.auth-card input{width:100%;box-sizing:border-box;padding:15px;border:1px solid #cbd8d0;border-radius:11px;font-size:16px}.auth-card button{display:inline-block;margin-top:20px;background:#10844f;color:white;border:0;border-radius:11px;padding:15px 22px;font-weight:700;font-size:16px;cursor:pointer}.auth-error{color:#a12424!important;font-size:14px;margin-top:12px}.auth-success{color:#087346!important;font-size:14px}.auth-note{font-size:13px!important}
 </style><style id="ntts-global-theme">:root{--ntts-primary:{% if site_theme %}{{ site_theme.primary_color }}{% else %}#10844F{% endif %};--ntts-dark:{% if site_theme %}{{ site_theme.dark_color }}{% else %}#181C24{% endif %};--ntts-bg:{% if site_theme %}{{ site_theme.background_color }}{% else %}#FBFBF9{% endif %};--ntts-heading:{% if site_theme %}{{ site_theme.heading_text_color }}{% else %}#181C24{% endif %};--ntts-body:{% if site_theme %}{{ site_theme.body_text_color }}{% else %}#475569{% endif %};--ntts-button-text:{% if site_theme %}{{ site_theme.button_text_color }}{% else %}#FFFFFF{% endif %};--ntts-radius:{% if site_theme %}{{ site_theme.border_radius }}{% else %}16{% endif %}px}body{font-family:{% if site_theme %}"{{ site_theme.font_body }}"{% else %}Poppins{% endif %},sans-serif}h1,h2,h3,h4,h5,h6{font-family:{% if site_theme %}"{{ site_theme.font_heading }}"{% else %}"Space Grotesk"{% endif %},sans-serif} .ntts-theme-preview-text{color:var(--ntts-body)} .ntts-theme-button{background:var(--ntts-primary);color:var(--ntts-button-text)} </style>
 </head><body>
-<header class="site-nav">
-
-    <a class="logo" href="/" aria-label="NTTS Mobility home">
-        <img src="{% static 'images/ntts-logo-figma.png' %}"
-             alt="NTTS Mobility" class="brand-logo">
-    </a>
-
-    <button class="menu-toggle" id="menuBtn"
-            type="button" aria-label="Toggle navigation">☰</button>
-
-    <nav id="navLinks">
-        <a href="/">Home</a>
-        <a href="/#fleet-motion">Fleet</a>
-        <a class="active" href="/my-rides/">My Rides</a>
-        <a href="/#process">How It Works</a>
-        <a href="/#safety">Safety</a>
-        <a href="/#pricing">Pricing</a>
-    </nav>
-
-    <a href="/#home" class="nav-book">
-        Book a Ride <span>↗</span>
-    </a>
-
-</header>
+<header class="site-nav"><a class="logo" href="/"><img src="{% static 'images/ntts-logo-figma.png' %}" alt="NTTS Mobility" class="brand-logo"></a><nav id="navLinks"><a href="/">Home</a><a href="/#fleet-motion">Fleet</a><a href="/#pricing">Pricing</a><a href="/customer/login/">My Rides / Login</a></nav></header>
 <main class="auth-wrap"><section class="auth-card"><h1>Customer Login</h1>
 <p>Verify your account securely using a one-time password sent to your email. No SMS required.</p>
 {% if messages %}{% for message in messages %}<p class="auth-success">{{ message }}</p>{% endfor %}{% endif %}
@@ -38,16 +15,4 @@
 <label for="email">Email Address</label><input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" value="{{ email }}" required>
 {% if otp_sent %}<label for="otp">6-digit Email OTP</label><input id="otp" name="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Enter OTP" required><button type="submit" name="action" value="verify_otp">Verify &amp; Login</button><p class="auth-note">OTP expires in 5 minutes. Check your inbox and spam folder.</p><button type="submit" name="action" value="send_otp" formnovalidate>Resend OTP</button>{% else %}<button type="submit" name="action" value="send_otp">Send Email OTP</button>{% endif %}
 </form><p class="auth-note">Your mobile number is used to connect your NTTS Mobility ride bookings. OTP is delivered only by email through Brevo.</p>
-</section></main>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const menuBtn = document.getElementById("menuBtn");
-    const navLinks = document.getElementById("navLinks");
-
-    if (menuBtn && navLinks) {
-        menuBtn.addEventListener("click", function () {
-            navLinks.classList.toggle("active");
-        });
-    }
-});
-</script></body></html>
+</section></main></body></html>
